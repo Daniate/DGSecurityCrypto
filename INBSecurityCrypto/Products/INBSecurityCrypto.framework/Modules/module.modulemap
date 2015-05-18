@@ -1,0 +1,6 @@
+framework module INBSecurityCrypto {
+  umbrella header "INBSecurityCrypto.h"
+
+  export *
+  module * { export * }
+}
