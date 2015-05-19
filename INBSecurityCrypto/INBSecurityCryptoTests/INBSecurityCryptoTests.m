@@ -162,18 +162,18 @@
 	NSData *hex = [self.plainData encodeToHexData];
 	NSData *plainData_ = [hex decodeFromHexData];
 	NSString *text = [[NSString alloc] initWithData:plainData_ encoding:NSUTF8StringEncoding];
-	XCTAssert([kText isEqualToString:text], @"Hex: 原始数据与解密出来的数据不一致");
+	XCTAssert([kText isEqualToString:text], @"Hex: 原始数据与解码后的数据不一致");
 	
 	NSString *hexStr = [kText encodeToHexString];
 	NSString *originText = [hexStr decodeFromHexString];
-	XCTAssert([kText isEqualToString:originText], @"Hex: 原始数据与解密出来的数据不一致");
+	XCTAssert([kText isEqualToString:originText], @"Hex: 原始数据与解码后的数据不一致");
 }
 
 - (void)testBase64 {
 	NSData *base64 = [self.plainData base64EncodedData];
 	NSData *plainData_ = [base64 base64DecodedData];
 	NSString *text = [[NSString alloc] initWithData:plainData_ encoding:NSUTF8StringEncoding];
-	XCTAssert([kText isEqualToString:text], @"Base64: 原始数据与解密出来的数据不一致");
+	XCTAssert([kText isEqualToString:text], @"Base64: 原始数据与解码后的数据不一致");
 }
 
 - (void)testMD {

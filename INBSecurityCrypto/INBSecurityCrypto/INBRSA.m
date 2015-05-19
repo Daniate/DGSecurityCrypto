@@ -76,6 +76,9 @@ static INBRSA *sharedINBRSA = nil;
 }
 
 - (BOOL)keysFromData:(NSData *)data password:(NSString *)pwd {
+	// 清理之前所生成的密钥，避免当无法获取密钥时，_publicKey、_privateKey依旧有值
+	_publicKey = NULL;
+	_privateKey = NULL;
 	const void *keys[] = {
 		kSecImportExportPassphrase,
 	};
@@ -102,8 +105,14 @@ static INBRSA *sharedINBRSA = nil;
 					// 证书可信，可以提取私钥与公钥，然后可以使用公私钥进行加解密操作
 					status = SecIdentityCopyPrivateKey(identity, &_privateKey);
 					_publicKey = SecTrustCopyPublicKey(trust);
+				} else {
+					status = -1;
 				}
+			} else {
+				status = -1;
 			}
+		} else {
+			status = -1;
 		}
 	}
 	if (options) {
@@ -118,6 +127,8 @@ static INBRSA *sharedINBRSA = nil;
 }
 
 - (BOOL)publicKeyFromDERData:(NSData *)data {
+	// 清理之前所生成的公钥。注意，重新获取公钥后，原有的私钥_privateKey可能就与新的公钥不匹配了
+	_publicKey = NULL;
 	SecTrustRef trust = NULL;
 	SecTrustResultType trustResult = kSecTrustResultInvalid;
 	SecCertificateRef cert = SecCertificateCreateWithData(kCFAllocatorDefault, (__bridge CFDataRef)data);
@@ -148,7 +159,7 @@ static INBRSA *sharedINBRSA = nil;
 		CFRelease(cert);
 		cert = NULL;
 	}
-	return (status == errSecSuccess);
+	return (status == errSecSuccess && _publicKey != NULL);
 }
 
 - (NSData *)encryptDataWithPublicKey:(NSData *)data {
