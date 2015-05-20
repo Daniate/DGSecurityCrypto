@@ -125,11 +125,27 @@
 - (NSString *)encodeToHexString;
 @end
 /**
+ *  密码学安全伪随机数生成器
+ */
+@interface NSData (INBCryptoPRNG)
+/**
+ *  生成安全随机数据，可用于生成密钥、初始化向量等等。
+ *
+ *  @param length 长度
+ *
+ *  @return 安全随机数据
+ */
++ (NSData *)generateSecureRandomData:(size_t)length;
+@end
+/**
  *  哈希消息验证码
  */
 @interface NSData (INBHmac)
 /**
- *  为指定的Hmac算法生成密钥
+ *  为指定的Hmac算法生成密钥。
+ *  Hmac建议的密钥长度至少为与该Hmac算法哈希函数生成的哈希值的长度。
+ *  这里用的就是最短密钥长度。
+ *  如果打算使用更长的密钥，请使用`+generateSecureRandomData:`方法生成指定长度的密钥。
  *
  *  @param algorithm Hmac算法
  *
@@ -140,11 +156,11 @@
  *  哈希消息验证码
  *
  *  @param algorithm Hmac算法
- *  @param key       密钥（NSData / NSString）
+ *  @param key       密钥
  *
  *  @return 哈希消息验证码。返回的数据未经任何处理（如，base64、hex）。
  */
-- (NSData *)HmacWithAlgorithm:(CCHmacAlgorithm)algorithm key:(id)key;
+- (NSData *)HmacWithAlgorithm:(CCHmacAlgorithm)algorithm key:(NSData *)key;
 @end
 /**
  *  对称密钥生成器
@@ -222,11 +238,16 @@
 /**
  *  使用分组对称加密算法对数据进行加解密。
  *
+ *  <b>初始化向量释疑</b>：初始化向量完全是可选的。CBC模式下才会使用到它。
+ *  如果初始化向量不为空，那么，其长度必须与算法分组大小（以字节为单位）一致。
+ *  如果使用了CBC模式，且没有指定初始化向量，会自动使用以0填充的初始化向量。
+ *  当使用ECB模式时或使用的是流加密算法时，初始化向量会被忽略掉。
+ *
  *  @param algorithm      算法，不能是流加密算法
  *  @param key            密钥
  *  @param iv             初始化向量，可以为空。
  *  @param operation      加密/解密操作
- *  @param isPKCS7Padding 是否使用PKCS7Padding填充模式
+ *  @param isPKCS7Padding 是否使用PKCS7Padding填充模式，如不使用，则是使用NoPadding填充模式
  *  @param isECB          是否使用ECB模式，如不使用，则是使用CBC模式
  *
  *  @return 加密/解密后的数据

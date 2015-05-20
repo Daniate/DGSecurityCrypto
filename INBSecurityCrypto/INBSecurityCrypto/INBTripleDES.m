@@ -54,11 +54,8 @@ static INBTripleDES *sharedINBTripleDES = nil;
 	if (iv) {
 		_iv = iv;
 	} else {
-		unsigned char *bytes = malloc(kCCBlockSizeAES128);
-		memset(bytes, 0x0, kCCBlockSizeAES128);
-		_iv = [NSData dataWithBytes:bytes length:kCCBlockSizeAES128];
-		free(bytes);
-		bytes = NULL;
+		unsigned char bytes[kCCBlockSize3DES] = {0};
+		_iv = [NSData dataWithBytes:bytes length:kCCBlockSize3DES];
 	}
 	return [self doCipher:data
 				operation:operation];

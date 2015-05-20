@@ -114,23 +114,25 @@
 static const unsigned char digits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 //static const unsigned char digits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 - (NSData *)encodeToHexData {
-	if (self == nil) {
-		return nil;
+	NSData *encodedData = nil;
+	if (self) {
+		NSUInteger len = self.length;
+		unsigned char *bytes = (unsigned char *)self.bytes;
+		size_t bufSize = (len << 1);
+		unsigned char *buf = malloc(bufSize);
+		if (buf) {
+			memset(buf, 0x0, len);
+			for (NSUInteger i = 0, j = 0; i < len; i++) {
+				buf[j] = digits[(0xF0 & bytes[i]) >> 4];
+				j++;
+				buf[j] = digits[0x0F & bytes[i]];
+				j++;
+			}
+			encodedData = [NSData dataWithBytes:buf length:bufSize];
+			free(buf);
+			buf = NULL;
+		}
 	}
-	NSUInteger len = self.length;
-	unsigned char *bytes = (unsigned char *)self.bytes;
-	size_t bufSize = (len << 1);
-	unsigned char *buf = malloc(bufSize);
-	memset(buf, 0x0, len);
-	for (NSUInteger i = 0, j = 0; i < len; i++) {
-		buf[j] = digits[(0xF0 & bytes[i]) >> 4];
-		j++;
-		buf[j] = digits[0x0F & bytes[i]];
-		j++;
-	}
-	NSData *encodedData = [NSData dataWithBytes:buf length:bufSize];
-	free(buf);
-	buf = NULL;
 	return encodedData;
 }
 /**
@@ -157,24 +159,26 @@ static int numberFromHex(unsigned char hex) {
 }
 
 - (NSData *)decodeFromHexData {
-	if (self == nil) {
-		return nil;
+	NSData *decodedData = nil;
+	if (self) {
+		NSUInteger len = self.length;
+		NSAssert((len & 0x01) == 0, @"数据长度必须是偶数");
+		unsigned char *bytes = (unsigned char *)self.bytes;
+		NSUInteger bufSize = (len >> 1) * sizeof(unsigned char);
+		unsigned char *buf = malloc(bufSize);
+		if (buf) {
+			for (NSUInteger i = 0, j = 0; i < len; j++) {
+				unsigned char f = numberFromHex(bytes[i]) << 4;
+				i++;
+				f = f | numberFromHex(bytes[i]);
+				i++;
+				buf[j] = f;
+			}
+			decodedData = [NSData dataWithBytes:buf length:bufSize];
+			free(buf);
+			buf = NULL;
+		}
 	}
-	NSUInteger len = self.length;
-	NSAssert((len & 0x01) == 0, @"数据长度必须是偶数");
-	unsigned char *bytes = (unsigned char *)self.bytes;
-	NSUInteger bufSize = (len >> 1) * sizeof(unsigned char);
-	unsigned char *buf = malloc(bufSize);
-	for (NSUInteger i = 0, j = 0; i < len; j++) {
-		unsigned char f = numberFromHex(bytes[i]) << 4;
-		i++;
-		f = f | numberFromHex(bytes[i]);
-		i++;
-		buf[j] = f;
-	}
-	NSData *decodedData = [NSData dataWithBytes:buf length:bufSize];
-	free(buf);
-	buf = NULL;
 	return decodedData;
 }
 
@@ -182,6 +186,38 @@ static int numberFromHex(unsigned char hex) {
 	return [[NSString alloc] initWithData:[self encodeToHexData]
 								 encoding:NSUTF8StringEncoding];
 }
+@end
+
+@implementation NSData (INBCryptoPRNG)
+
++ (NSData *)generateSecureRandomData:(size_t)length {
+	NSData *randomData = nil;
+	void *buf = malloc(length);
+	if (buf) {
+		memset(buf, 0x0, length);
+#ifdef __IPHONE_8_0
+		if (INBIOS8_0_0OrLater) {
+			if (CCRandomGenerateBytes(buf, length) == kCCSuccess) {
+				randomData = [NSData dataWithBytes:buf length:length];
+			} else {
+				perror(__PRETTY_FUNCTION__);
+			}
+		} else {
+#endif
+			if (SecRandomCopyBytes(kSecRandomDefault, length, buf) == 0) {
+				randomData = [NSData dataWithBytes:buf length:length];
+			} else {
+				perror(__PRETTY_FUNCTION__);
+			}
+#ifdef __IPHONE_8_0
+		}
+#endif
+		free(buf);
+		buf = NULL;
+	}
+	return randomData;
+}
+
 @end
 
 @implementation NSData (INBHmac)
@@ -215,52 +251,19 @@ static int numberFromHex(unsigned char hex) {
 		default:
 			break;
 	}
-	void *keyBuf = malloc(keySize);
-	memset(keyBuf, 0x0, keySize);
-	NSData *key = nil;
-	
-#ifdef __IPHONE_8_0
-	if (INBIOS8_0_0OrLater) {
-		CCRNGStatus status = CCRandomGenerateBytes(keyBuf, keySize);
-		if (status == kCCSuccess) {
-			key = [NSData dataWithBytes:keyBuf length:keySize];
-		} else {
-			perror(__PRETTY_FUNCTION__);
-		}
-	} else {
-#endif
-		if (SecRandomCopyBytes(kSecRandomDefault, keySize, keyBuf) == 0) {
-			key = [NSData dataWithBytes:keyBuf length:keySize];
-		} else {
-			perror(__PRETTY_FUNCTION__);
-		}
-#ifdef __IPHONE_8_0
-	}
-#endif
-	
-	free(keyBuf);
-	keyBuf = NULL;
-	return key;
+	return [NSData generateSecureRandomData:keySize];
 }
 
-- (NSData *)HmacWithAlgorithm:(CCHmacAlgorithm)algorithm key:(id)key {
+- (NSData *)HmacWithAlgorithm:(CCHmacAlgorithm)algorithm key:(NSData *)key {
 	NSParameterAssert(algorithm == kCCHmacAlgSHA1 ||
 					  algorithm == kCCHmacAlgMD5 ||
 					  algorithm == kCCHmacAlgSHA256 ||
 					  algorithm == kCCHmacAlgSHA384 ||
 					  algorithm == kCCHmacAlgSHA512 ||
 					  algorithm == kCCHmacAlgSHA224);
-	NSParameterAssert(key != nil &&
-					  ([key isKindOfClass:[NSData class]] ||
-					   [key isKindOfClass:[NSString class]]));
-	NSData *keyData = nil;
-	if ([key isKindOfClass:[NSString class]]) {
-		keyData = [key dataUsingEncoding:NSUTF8StringEncoding];
-	} else {
-		keyData = (NSData *)key;
-	}
+	NSParameterAssert(key != nil);
 	unsigned char buf[CC_SHA512_DIGEST_LENGTH] = {0x0};
-	CCHmac(algorithm, keyData.bytes, keyData.length, self.bytes, self.length, buf);
+	CCHmac(algorithm, key.bytes, key.length, self.bytes, self.length, buf);
 	NSUInteger length = 0;
 	switch (algorithm) {
 		case kCCHmacAlgSHA1:
@@ -290,13 +293,6 @@ static int numberFromHex(unsigned char hex) {
 
 @implementation NSData (INBSymmetricKeyGenerator)
 + (NSData *)generateSymmetricKeyForAlgorithm:(CCAlgorithm)algorithm {
-	NSParameterAssert(algorithm == kCCAlgorithmAES ||
-					  algorithm == kCCAlgorithmDES ||
-					  algorithm == kCCAlgorithm3DES ||
-					  algorithm == kCCAlgorithmCAST ||
-					  algorithm == kCCAlgorithmRC4 ||
-					  algorithm == kCCAlgorithmRC2 ||
-					  algorithm == kCCAlgorithmBlowfish);
 	unsigned int keySize = 0;
 	switch (algorithm) {
 		case kCCAlgorithmDES:
@@ -321,32 +317,7 @@ static int numberFromHex(unsigned char hex) {
 			keySize = kCCKeySizeAES256;
 			break;
 	}
-	void *keyBuf = malloc(keySize);
-	memset(keyBuf, 0x0, keySize);
-	NSData *key = nil;
-	
-#ifdef __IPHONE_8_0
-	if (INBIOS8_0_0OrLater) {
-		CCRNGStatus status = CCRandomGenerateBytes(keyBuf, keySize);
-		if (status == kCCSuccess) {
-			key = [NSData dataWithBytes:keyBuf length:keySize];
-		} else {
-			perror(__PRETTY_FUNCTION__);
-		}
-	} else {
-#endif
-		if (SecRandomCopyBytes(kSecRandomDefault, keySize, keyBuf) == 0) {
-			key = [NSData dataWithBytes:keyBuf length:keySize];
-		} else {
-			perror(__PRETTY_FUNCTION__);
-		}
-#ifdef __IPHONE_8_0
-	}
-#endif
-	
-	free(keyBuf);
-	keyBuf = NULL;
-	return key;
+	return [NSData generateSymmetricKeyForAlgorithm:algorithm keySize:keySize];
 }
 
 /*******************************
@@ -432,32 +403,7 @@ static int numberFromHex(unsigned char hex) {
 			}
 			break;
 	}
-	void *keyBuf = malloc(keySize);
-	memset(keyBuf, 0x0, keySize);
-	NSData *key = nil;
-	
-#ifdef __IPHONE_8_0
-	if (INBIOS8_0_0OrLater) {
-		CCRNGStatus status = CCRandomGenerateBytes(keyBuf, keySize);
-		if (status == kCCSuccess) {
-			key = [NSData dataWithBytes:keyBuf length:keySize];
-		} else {
-			perror(__PRETTY_FUNCTION__);
-		}
-	} else {
-#endif
-		if (SecRandomCopyBytes(kSecRandomDefault, keySize, keyBuf) == 0) {
-			key = [NSData dataWithBytes:keyBuf length:keySize];
-		} else {
-			perror(__PRETTY_FUNCTION__);
-		}
-#ifdef __IPHONE_8_0
-	}
-#endif
-	
-	free(keyBuf);
-	keyBuf = NULL;
-	return key;
+	return [NSData generateSecureRandomData:keySize];
 }
 @end
 
@@ -490,37 +436,11 @@ static int numberFromHex(unsigned char hex) {
 			ivSize = kCCBlockSizeAES128;
 			break;
 	}
-	void *ivBuf = malloc(ivSize);
-	memset(ivBuf, 0x0, ivSize);
-	NSData *iv = nil;
-	
-#ifdef __IPHONE_8_0
-	if (INBIOS8_0_0OrLater) {
-		CCRNGStatus status = CCRandomGenerateBytes(ivBuf, ivSize);
-		if (status == kCCSuccess) {
-			iv = [NSData dataWithBytes:ivBuf length:ivSize];
-		} else {
-			perror(__PRETTY_FUNCTION__);
-		}
-	} else {
-#endif
-		if (SecRandomCopyBytes(kSecRandomDefault, ivSize, ivBuf) == 0) {
-			iv = [NSData dataWithBytes:ivBuf length:ivSize];
-		} else {
-			perror(__PRETTY_FUNCTION__);
-		}
-#ifdef __IPHONE_8_0
-	}
-#endif
-	
-	free(ivBuf);
-	ivBuf = NULL;
-	return iv;
+	return [NSData generateSecureRandomData:ivSize];
 }
 @end
 
 @implementation NSData (INBSymmetricEncryptionDecryption)
-
 /**
  *  将数据的长度补足为分组大小的整数倍
  *
@@ -557,6 +477,11 @@ static NSData * padding(NSData *data, size_t blockSize) {
 							 isPKCS7Padding:isPKCS7Padding
 									  isECB:NO];
 }
+/**
+ *  额外的填充长度，针对NoPadding。由于是全局变量，
+ *  所以，如果使用了NoPadding，尽量不要在多线程中同时多次调用相关方法。
+ */
+NSUInteger extraPaddingLength = 0;
 
 - (NSData *)doBlockCipherWithAlgorithm:(CCAlgorithm)algorithm
 								   key:(NSData *)key
@@ -603,6 +528,7 @@ static NSData * padding(NSData *data, size_t blockSize) {
 			NSParameterAssert(iv == nil || iv.length == kCCBlockSizeAES128);
 			break;
 	}
+	NSData *outData = nil;
 	if (self) {
 		size_t blockSize = 0;
 		switch (algorithm) {
@@ -630,43 +556,48 @@ static NSData * padding(NSData *data, size_t blockSize) {
 		size_t bufSize = len + blockSize;
 		size_t tmp = len % blockSize;
 		if (!isPKCS7Padding && tmp != 0) {
-			bufSize += (blockSize - tmp);
+			// 对于NoPadding，需要手动将原始数据的长度补足为分组大小的整数倍
+			extraPaddingLength = blockSize - tmp;
+			bufSize += extraPaddingLength;
 			inputData = padding(self, blockSize);
 		}
 		void *buf = malloc(bufSize);
-		memset(buf, 0x0, bufSize);
-		size_t dataOutMoved = 0;
-		
-		CCOptions options = 0;
-		if (isPKCS7Padding) {
-			options |= kCCOptionPKCS7Padding;
+		if (buf) {
+			memset(buf, 0x0, bufSize);
+			CCOptions options = 0;
+			if (isPKCS7Padding) {
+				options |= kCCOptionPKCS7Padding;
+			}
+			if (isECB) {
+				options |= kCCOptionECBMode;
+			}
+			size_t dataOutMoved = 0;
+			CCCryptorStatus status = CCCrypt(operation,
+											 algorithm,
+											 options,
+											 key.bytes,
+											 key.length,
+											 iv.bytes,
+											 inputData.bytes,
+											 inputData.length,
+											 buf,
+											 bufSize,
+											 &dataOutMoved);
+			
+			if (status == kCCSuccess) {
+				if (operation == kCCDecrypt && extraPaddingLength > 0) {
+					dataOutMoved -= extraPaddingLength;
+					extraPaddingLength = 0;
+				}
+				outData = [NSData dataWithBytes:buf length:dataOutMoved];
+			} else {
+				perror(__PRETTY_FUNCTION__);
+			}
+			free(buf);
+			buf = NULL;
 		}
-		if (isECB) {
-			options |= kCCOptionECBMode;
-		}
-		
-		CCCryptorStatus status = CCCrypt(operation,
-										 algorithm,
-										 options,
-										 key.bytes,
-										 key.length,
-										 iv.bytes,
-										 inputData.bytes,
-										 inputData.length,
-										 buf,
-										 bufSize,
-										 &dataOutMoved);
-		NSData *outData = nil;
-		if (status == kCCSuccess) {
-			outData = [NSData dataWithBytes:buf length:dataOutMoved];
-		} else {
-			perror(__PRETTY_FUNCTION__);
-		}
-		free(buf);
-		buf = NULL;
-		return outData;
 	}
-	return nil;
+	return outData;
 }
 @end
 

@@ -34,8 +34,8 @@ static INBRSA *sharedINBRSA = nil;
 - (void)setPadding:(SecPadding)padding {
 	// kSecPaddingPKCS1MD2 and kSecPaddingPKCS1MD5, Unsupported as of iOS 5.0
 	// 自iOS 5.0起，不再支持kSecPaddingPKCS1MD2、kSecPaddingPKCS1MD5
-	NSParameterAssert(/*padding == kSecPaddingPKCS1MD2 ||
-					  padding == kSecPaddingPKCS1MD5 ||*/
+	NSParameterAssert(/*padding == kSecPaddingPKCS1MD2 || 
+					   padding == kSecPaddingPKCS1MD5 ||*/
 					  padding == kSecPaddingPKCS1SHA1 ||
 					  padding == kSecPaddingPKCS1SHA224 ||
 					  padding == kSecPaddingPKCS1SHA256 ||
@@ -108,8 +108,6 @@ static INBRSA *sharedINBRSA = nil;
 				} else {
 					status = -1;
 				}
-			} else {
-				status = -1;
 			}
 		} else {
 			status = -1;
@@ -143,8 +141,8 @@ static INBRSA *sharedINBRSA = nil;
 			if (status == errSecSuccess &&
 				(trustResult == kSecTrustResultUnspecified ||
 				 trustResult == kSecTrustResultProceed)) {
-				_publicKey = SecTrustCopyPublicKey(trust);
-			}
+					_publicKey = SecTrustCopyPublicKey(trust);
+				}
 		}
 	}
 	if (trust) {
@@ -192,18 +190,18 @@ static INBRSA *sharedINBRSA = nil;
 	if (data.length == 0 ||
 		key == NULL ||
 		(operation != kCCEncrypt &&
-		 operation != kCCDecrypt) ) {
-		return nil;
-	}
-	// 分配内存块，用于存放解密后的数据段
+		 operation != kCCDecrypt)) {
+			return nil;
+		}
+	// 分配内存块，用于存放加密/解密后的数据段
 	size_t bufSize = SecKeyGetBlockSize(key);
 	uint8_t *buf = malloc(bufSize * sizeof(uint8_t));
 	// 计算数据段最大长度及数据段的个数
 	double totalLength = data.length;
 	size_t blockSize = bufSize;
 	/**
-	 * When PKCS1 padding is performed, the maximum length of data 
-	 * that can be encrypted is 11 bytes less than the value 
+	 * When PKCS1 padding is performed, the maximum length of data
+	 * that can be encrypted is 11 bytes less than the value
 	 * returned by the SecKeyGetBlockSize function
 	 */
 	if (operation == kCCEncrypt) {
@@ -211,12 +209,12 @@ static INBRSA *sharedINBRSA = nil;
 	}
 	size_t blockCount = (size_t)ceil(totalLength / blockSize);
 	NSMutableData *outData = [NSMutableData data];
-	// 分段解密
+	// 分段加密/解密
 	for (int i = 0; i < blockCount; i++) {
 		NSUInteger loc = i * blockSize;
 		// 数据段的实际大小。最后一段可能比blockSize小。
 		NSUInteger dataSegmentRealSize = MIN(blockSize, totalLength - loc);
-		// 截取需要解密的数据段
+		// 截取需要加密/解密的数据段
 		NSData *dataSegment = [data subdataWithRange:NSMakeRange(loc, dataSegmentRealSize)];
 		OSStatus status = -1;
 		if (operation == kCCEncrypt) {
@@ -300,21 +298,15 @@ static INBRSA *sharedINBRSA = nil;
 	// 分配内存块，用于存放签名后的数据
 	size_t sigLen = SecKeyGetBlockSize(self.privateKey);
 	uint8_t *sig = malloc(sigLen * sizeof(uint8_t));
-	memset(sig, 0x0, sigLen);
-	// 对消息摘要进行签名
-	OSStatus status = SecKeyRawSign(self.privateKey, self.padding, dataToSign, dataToSignLen, sig, &sigLen);
-	NSMutableData *outData = [NSMutableData data];
-	if (status == errSecSuccess) {
-		[outData appendData:[NSData dataWithBytes:(const void *)sig
-										   length:sigLen]];
-	} else {
-		if (sig) {
-			free(sig);
-			sig = NULL;
-		}
-		return nil;
-	}
+	NSData *outData = nil;
 	if (sig) {
+		memset(sig, 0x0, sigLen);
+		// 对消息摘要进行签名
+		OSStatus status = SecKeyRawSign(self.privateKey, self.padding, dataToSign, dataToSignLen, sig, &sigLen);
+		if (status == errSecSuccess) {
+			outData = [NSData dataWithBytes:(const void *)sig
+									 length:sigLen];
+		}
 		free(sig);
 		sig = NULL;
 	}

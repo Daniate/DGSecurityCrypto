@@ -23,6 +23,7 @@
 	// Put setup code here. This method is called before the invocation of each test method in the class.
 	self.plainData = [kText dataUsingEncoding:NSUTF8StringEncoding];
 	NSUInteger length = self.plainData.length;
+	NSLog(@"plainText length - %lu", (unsigned long)kText.length);
 	NSLog(@"plainData length - %lu", (unsigned long)length);
 	NSLog(@"长度%@DES分组大小", length >= kCCBlockSizeDES ? @"不小于" : @"小于");
 	NSLog(@"长度%@3DES分组大小", length >= kCCBlockSize3DES ? @"不小于" : @"小于");
@@ -34,59 +35,83 @@
 	[super tearDown];
 }
 
+- (void)testPRNG {
+	NSData *randomData = [NSData generateSecureRandomData:-1];
+	NSString *rndStr = [randomData encodeToHexString];
+	NSLog(@"random - %@", rndStr);
+}
+
 - (void)testDES {
 	CCAlgorithm alg = kCCAlgorithmDES;
 	NSData *key = [NSData generateSymmetricKeyForAlgorithm:alg];
-	NSData *iv = [NSData generateIVForAlgorithm:alg];
+	NSData *iv = nil;
 	if (arc4random() % 2 == 0) {
-		iv = nil;
+		iv = [NSData generateIVForAlgorithm:alg];
 	}
 	NSLog(@"iv - %@", [iv encodeToHexString]);
-	NSData *cipherData = [self.plainData doBlockCipherWithAlgorithm:alg key:key iv:iv operation:kCCEncrypt isPKCS7Padding:YES isECB:NO];
-	NSData *plainData_ = [cipherData doBlockCipherWithAlgorithm:alg key:key iv:iv operation:kCCDecrypt isPKCS7Padding:YES isECB:NO];
+	BOOL isPKCS7Padding = (arc4random() % 2 == 0);
+	BOOL isECB = (arc4random() % 2 == 0);
+	NSLog(@"DES isPKCS7Padding - %@ isECB - %@", isPKCS7Padding ? @"YES" : @"NO", isECB ? @"YES" : @"NO");
+	NSData *cipherData = [self.plainData doBlockCipherWithAlgorithm:alg key:key iv:iv operation:kCCEncrypt isPKCS7Padding:isPKCS7Padding isECB:isECB];
+	NSData *plainData_ = [cipherData doBlockCipherWithAlgorithm:alg key:key iv:iv operation:kCCDecrypt isPKCS7Padding:isPKCS7Padding isECB:isECB];
 	NSString *text = [[NSString alloc] initWithData:plainData_ encoding:NSUTF8StringEncoding];
-	XCTAssert([kText isEqualToString:text], @"DES: 原始数据与解密出来的数据不一致");
+	unichar uc = [text characterAtIndex:text.length - 1];
+	NSLog(@"%x", uc);
+	NSLog(@"text - |%@|", text);
+	XCTAssert([kText isEqualToString:[text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]], @"DES: 原始数据与解密出来的数据不一致");
 }
 
 - (void)testCAST {
 	CCAlgorithm alg = kCCAlgorithmCAST;
 	NSData *key = [NSData generateSymmetricKeyForAlgorithm:alg];
-	NSData *iv = [NSData generateIVForAlgorithm:alg];
+	NSData *iv = nil;
 	if (arc4random() % 2 == 0) {
-		iv = nil;
+		iv = [NSData generateIVForAlgorithm:alg];
 	}
 	NSLog(@"iv - %@", [iv encodeToHexString]);
-	NSData *cipherData = [self.plainData doBlockCipherWithAlgorithm:alg key:key iv:iv operation:kCCEncrypt isPKCS7Padding:YES isECB:NO];
-	NSData *plainData_ = [cipherData doBlockCipherWithAlgorithm:alg key:key iv:iv operation:kCCDecrypt isPKCS7Padding:YES isECB:NO];
+	BOOL isPKCS7Padding = (arc4random() % 2 == 0);
+	BOOL isECB = (arc4random() % 2 == 0);
+	NSLog(@"CAST isPKCS7Padding - %@ isECB - %@", isPKCS7Padding ? @"YES" : @"NO", isECB ? @"YES" : @"NO");
+	NSData *cipherData = [self.plainData doBlockCipherWithAlgorithm:alg key:key iv:iv operation:kCCEncrypt isPKCS7Padding:isPKCS7Padding isECB:isECB];
+	NSData *plainData_ = [cipherData doBlockCipherWithAlgorithm:alg key:key iv:iv operation:kCCDecrypt isPKCS7Padding:isPKCS7Padding isECB:isECB];
 	NSString *text = [[NSString alloc] initWithData:plainData_ encoding:NSUTF8StringEncoding];
+	NSLog(@"text - |%@|", text);
 	XCTAssert([kText isEqualToString:text], @"CAST: 原始数据与解密出来的数据不一致");
 }
 
 - (void)testRC2 {
 	CCAlgorithm alg = kCCAlgorithmRC2;
 	NSData *key = [NSData generateSymmetricKeyForAlgorithm:alg];
-	NSData *iv = [NSData generateIVForAlgorithm:alg];
+	NSData *iv = nil;
 	if (arc4random() % 2 == 0) {
-		iv = nil;
+		iv = [NSData generateIVForAlgorithm:alg];
 	}
 	NSLog(@"iv - %@", [iv encodeToHexString]);
-	NSData *cipherData = [self.plainData doBlockCipherWithAlgorithm:alg key:key iv:iv operation:kCCEncrypt isPKCS7Padding:YES isECB:NO];
-	NSData *plainData_ = [cipherData doBlockCipherWithAlgorithm:alg key:key iv:iv operation:kCCDecrypt isPKCS7Padding:YES isECB:NO];
+	BOOL isPKCS7Padding = (arc4random() % 2 == 0);
+	BOOL isECB = (arc4random() % 2 == 0);
+	NSLog(@"RC2 isPKCS7Padding - %@ isECB - %@", isPKCS7Padding ? @"YES" : @"NO", isECB ? @"YES" : @"NO");
+	NSData *cipherData = [self.plainData doBlockCipherWithAlgorithm:alg key:key iv:iv operation:kCCEncrypt isPKCS7Padding:isPKCS7Padding isECB:isECB];
+	NSData *plainData_ = [cipherData doBlockCipherWithAlgorithm:alg key:key iv:iv operation:kCCDecrypt isPKCS7Padding:isPKCS7Padding isECB:isECB];
 	NSString *text = [[NSString alloc] initWithData:plainData_ encoding:NSUTF8StringEncoding];
+	NSLog(@"text - |%@|", text);
 	XCTAssert([kText isEqualToString:text], @"RC2: 原始数据与解密出来的数据不一致");
 }
 
 - (void)testBlowfish {
 	CCAlgorithm alg = kCCAlgorithmBlowfish;
 	NSData *key = [NSData generateSymmetricKeyForAlgorithm:alg];
-	NSData *iv = [NSData generateIVForAlgorithm:alg];
+	NSData *iv = nil;
 	if (arc4random() % 2 == 0) {
-		iv = nil;
+		iv = [NSData generateIVForAlgorithm:alg];
 	}
 	NSLog(@"iv - %@", [iv encodeToHexString]);
-	NSData *cipherData = [self.plainData doBlockCipherWithAlgorithm:alg key:key iv:iv operation:kCCEncrypt isPKCS7Padding:YES isECB:NO];
-	NSData *plainData_ = [cipherData doBlockCipherWithAlgorithm:alg key:key iv:iv operation:kCCDecrypt isPKCS7Padding:YES isECB:NO];
+	BOOL isPKCS7Padding = (arc4random() % 2 == 0);
+	BOOL isECB = (arc4random() % 2 == 0);
+	NSLog(@"Blowfish isPKCS7Padding - %@ isECB - %@", isPKCS7Padding ? @"YES" : @"NO", isECB ? @"YES" : @"NO");
+	NSData *cipherData = [self.plainData doBlockCipherWithAlgorithm:alg key:key iv:iv operation:kCCEncrypt isPKCS7Padding:isPKCS7Padding isECB:isECB];
+	NSData *plainData_ = [cipherData doBlockCipherWithAlgorithm:alg key:key iv:iv operation:kCCDecrypt isPKCS7Padding:isPKCS7Padding isECB:isECB];
 	NSString *text = [[NSString alloc] initWithData:plainData_ encoding:NSUTF8StringEncoding];
+	NSLog(@"text - |%@|", text);
 	XCTAssert([kText isEqualToString:text], @"Blowfish: 原始数据与解密出来的数据不一致");
 }
 
@@ -96,6 +121,14 @@
 	NSData *plainData_ = [tripleDES tripleDESDecrypt:cipherData];
 	NSString *text = [[NSString alloc] initWithData:plainData_ encoding:NSUTF8StringEncoding];
 	XCTAssert([kText isEqualToString:text], @"3DES: 原始数据与解密出来的数据不一致");
+	
+	// IV is NULL
+	NSData *key = [NSData generateSymmetricKeyForAlgorithm:kCCAlgorithm3DES];
+	cipherData = [tripleDES doCipher:self.plainData key:key iv:nil operation:kCCEncrypt];
+	plainData_ = [tripleDES doCipher:cipherData key:key iv:nil operation:kCCDecrypt];
+	text = [[NSString alloc] initWithData:plainData_ encoding:NSUTF8StringEncoding];
+	NSLog(@"text - |%@|", text);
+	XCTAssert([kText isEqualToString:text], @"AES: 原始数据与解密出来的数据不一致");
 }
 /**
  *  AES
@@ -109,6 +142,15 @@
 	NSData *cipherData = [aes AES256Encrypt:self.plainData];
 	NSData *plainData_ = [aes AES256Decrypt:cipherData];
 	NSString *text = [[NSString alloc] initWithData:plainData_ encoding:NSUTF8StringEncoding];
+	NSLog(@"text - |%@|", text);
+	XCTAssert([kText isEqualToString:text], @"AES: 原始数据与解密出来的数据不一致");
+	
+	// IV is NULL
+	NSData *key = [NSData generateSymmetricKeyForAlgorithm:kCCAlgorithmAES];
+	cipherData = [aes doCipher:self.plainData key:key iv:nil operation:kCCEncrypt];
+	plainData_ = [aes doCipher:cipherData key:key iv:nil operation:kCCDecrypt];
+	text = [[NSString alloc] initWithData:plainData_ encoding:NSUTF8StringEncoding];
+	NSLog(@"text - |%@|", text);
 	XCTAssert([kText isEqualToString:text], @"AES: 原始数据与解密出来的数据不一致");
 }
 /**
@@ -129,6 +171,7 @@
 	NSData *cipherData = [rsa encryptDataWithPublicKey:self.plainData];
 	NSData *plainData_ = [rsa decryptDataWithPrivateKey:cipherData];
 	NSString *text = [[NSString alloc] initWithData:plainData_ encoding:NSUTF8StringEncoding];
+	NSLog(@"text - |%@|", text);
 	XCTAssert([kText isEqualToString:text], @"RSA: 原始数据与解密出来的数据不一致");
 }
 /**
