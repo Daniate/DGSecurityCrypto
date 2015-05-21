@@ -4,11 +4,11 @@
 
 可通过Target `INBSecurityCryptoAggregate`构建framework
 
-![image](./INBSecurityCrypto_architectures.png)
+![image](./images/INBSecurityCrypto_architectures.png)
 
 可通过Target `INBSecurityCrypto`，进行测试，详细内容请参考测试代码及相关注释
 
-![image](./INBSecurityCrypto_Test.png)
+![image](./images/INBSecurityCrypto_Test.png)
 
 ---
 
@@ -16,17 +16,17 @@
 
 如果出现错误：`Include of non-modular header inside framework module ***`
 
-![image](./INBSecurityCrypto_error.png)
+![image](./images/INBSecurityCrypto_error.png)
 
 需要对项目配置进行修改：
 
 TARGETS -> Build Settings -> Language - Modules，将`Allow Non-modular includes In Framework Modules`设置为`YES`
 
-![image](./INBSecurityCrypto_Allow_Non-modular.png)
+![image](./images/INBSecurityCrypto_Allow_Non-modular.png)
 
 另外，由于Catagory的存在，还需要在TARGETS -> Build Settings -> Linking -> Other Linker Flags中添加`-ObjC	`
 
-![image](./INBSecurityCrypto_Ohter_Linker_Flags.png)
+![image](./images/INBSecurityCrypto_Other_Linker_Flags.png)
 
 ---
 
