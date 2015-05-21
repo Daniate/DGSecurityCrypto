@@ -10,6 +10,16 @@
 
 ![image](./INBSecurityCrypto_Test.png)
 
+当使用`INBSecurityCrypto.framework`时，如果出现错误：`Include of non-modular header inside framework module ***`
+
+![image](./INBSecurityCrypto_error.png)
+
+需要对项目配置进行修改：
+
+TARGETS -> Build Settings -> Language - Modules，将`Allow Non-modular includes In Framework Modules`设置为`YES`
+
+![image](./INBSecurityCrypto_Allow_Non-modular.png)
+
 ---
 
 ### 包含的加密算法
