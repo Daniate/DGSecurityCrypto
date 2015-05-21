@@ -12,6 +12,29 @@
 
 #define kText @"近日召开的国务院常务会议鼓励电信企业提升城市宽带接入速率，降低资费水平，推出流量不清零等服务，随后，三大运营商很快公布各自提速降费方案。但网络上汹涌的“差评”吐槽方案中的一些举措诚意缺失。运营商们用“不给力”的表现，再次证明要切实深化电信行业改革，不仅要靠政府监管发力推动，还须把内在驱动的“鞭子”交给市场。梳理三大运营商的提速降费方案不难发现，尽管上有敦促下有呼声，但社会期待的全业务大规模降费并没有实现。运营商只是以“限时流量”“促销套餐”等手段来拉低单价，一些“鸡肋式”套餐甚至会让有的消费者通讯费用不降反升。这种“假摔式降费”，既反映出部分电信企业“糊弄”的态度，又暴露出当前电信市场竞争度远未达到激烈的程度。缺乏有效的市场竞争，一直是电信行业改革滞后的重要原因。在消费者眼里，不仅有些“套餐”成为吸费的“圈套”，就连宽带入户这“最后一公里”，也堵在了运营商对居民小区势力范围划分形成的“垄断”上。在行业内，几家大运营商因其传统市场优势地位难以被撼动，形成较为稳定的市场份额和收益，对消费者需求和呼声长期缺乏足够关切，也缺乏进行根本变革的内在动力。这直接导致电信市场竞争格局长期固化，运营商资费居高不下，服务和基础设施有待完善，网间技术融合仍未较好实现的尴尬局面。站在更高层面审视，提速降费不仅关系到消费者利益，更关系到“互联网＋”在经济转型升级的关键时刻能否更好地产生“乘法效应”。我国已经是世界第二大经济体，世界第一大手机拥有国，网速却排在世界80名之后，人们每到一处往往满怀渴望地询问“有没有wifi”……“惜流如金”和网速瓶颈不仅显示了消费者的窘境，也在基础服务上制约着“互联网＋”的发展。因此，提速降费深层次目的是更好地提升基础设施服务，降低社会经济运行成本，满足消费者的需求，激发社会创新创业活力。此外，提速降费也是电信企业应对未来市场竞争压力，提升企业竞争力的理性选择。去年中国手机网民已达6．5亿户，数据流量消费更增长迅猛。从长远看，电信企业放低姿态，薄利多销，是其主动适应市场需求、提高经营效益的必然选择。越早意识到、想明白这点，企业在竞争力提升上就会越主动。看来，用政府之手强化改革方向，对相关行业、企业抓监管抓考核之外，在根本上还要让市场之手挥起“鞭子”，倒逼改革措施触及深层次利益落地生根。近日召开的国务院常务会议提出将推进电信市场开放和公平竞争，年内宽带接入业务开放试点企业将增加到100家以上，这无疑将更好地让市场在资源配置中发挥决定性作用，让市场主体顺应改革大潮和竞争压力拿出更多“诚意”，更好地满足消费者需求、为经济转型发展助力。"
 
+// 以文本形式打开PEM格式的证书，所获取到的base64字符串
+#define kBase64PublicKey @"MIID5DCCAsygAwIBAgIBATALBgkqhkiG9w0BAQswdzEUMBIGA1UEAwwLRGFuaWF0\
+ZUNlcnQxEDAOBgNVBAoMB0RhbmlhdGUxDzANBgNVBAgMBuS4iua1tzELMAkGA1UE\
+BhMCQ04xDzANBgNVBAcMBuS4iua1tzEeMBwGCSqGSIb3DQEJARYPZGFuaWF0ZUAx\
+MjYuY29tMB4XDTE1MDUxODA0MDUzN1oXDTI1MDUxNTA0MDUzN1owdzEUMBIGA1UE\
+AwwLRGFuaWF0ZUNlcnQxEDAOBgNVBAoMB0RhbmlhdGUxDzANBgNVBAgMBuS4iua1\
+tzELMAkGA1UEBhMCQ04xDzANBgNVBAcMBuS4iua1tzEeMBwGCSqGSIb3DQEJARYP\
+ZGFuaWF0ZUAxMjYuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA\
+rmkRfH8qROmgDaKdhNVP/hD58Nb+w7l/yM4mbYY6XUcGnFEI44lcNem/m6qUVR+T\
+2xMqeOYHdJ7SogufHNphnZsi1hljVYOoS/ZZaotTBOvio+nQE41CTNSo3h8pinNh\
+Lus1vv35aXkGA4SW0ZwRc8/CrJo4ZPtkO92K+T+yIfC+57Ct12PHu1Z3q2SjFKds\
+GWC5xcfBDdUcnZMONky0mTI0vJSNllAtiDqsVAtM8X7z/3vAbbGV16stg2RUAR3c\
+TBEHAoG/BuW2cNEWO8F6cn0sXyAqOcYaNQGBgVxJKrICYdcZ2MX1GHbU0W7FK25D\
+Xz1+d/JAWFyVO0zNHcbZCQIDAQABo30wezAPBgNVHQ8BAf8EBQMDB/+AMEwGA1Ud\
+JQEB/wRCMEAGCCsGAQUFBwMEBggrBgEFBQcDAgYIKwYBBQUHAwEGCCsGAQUFBwMD\
+BgcrBgEFAgMEBgcrBgEFAgMFBgRVHSUAMBoGA1UdEQQTMBGBD2RhbmlhdGVAMTI2\
+LmNvbTANBgkqhkiG9w0BAQsFAAOCAQEAhHcLDksfL6JrDPS6NuP/dIkZkU0efDGh\
+MvensDjebys4OHTZ+JRUB/WrGQG9z4NULQCyUu2U19O6J//TJPnHznRwHJFuUsmz\
+yrSAyRUsBv90L4g+phzQWCl3ECTwft+n/L73CJLNC+HZPZsMJSr41meOv7I7RXGY\
+IgqwaDQYsl5tB7BUmVqVIHoCzndhvpTF84UJyMlOCDeaZFY85Jjfokjnz9AFDaiF\
+AnWUvec39pTE48Lpw6Hv0AEoKIj9LUM9WFqX33qv6ZNcOhYnFIlXcmD2EH2fuojn\
+AykJuj5Zp2mz4r8uf6yBhORuG3mIXZzUIeH1WlTDOYoxNXJxbUHjWg=="
+
 @interface INBSecurityCryptoTests : XCTestCase
 @property (nonatomic, copy) NSData *plainData;
 @end
@@ -35,10 +58,12 @@
 	[super tearDown];
 }
 
-- (void)testPRNG {
-	NSData *randomData = [NSData generateSecureRandomData:-1];
+- (void)testSecurePRNG {
+	u_int32_t rndLen = arc4random() % 100 + 1;
+	NSData *randomData = [NSData generateSecureRandomData:rndLen];
 	NSString *rndStr = [randomData encodeToHexString];
 	NSLog(@"random - %@", rndStr);
+	XCTAssertNotNil(randomData, @"Secure PRNG: 安全伪随机数为空");
 }
 
 - (void)testDES {
@@ -174,6 +199,29 @@
 	NSLog(@"text - |%@|", text);
 	XCTAssert([kText isEqualToString:text], @"RSA: 原始数据与解密出来的数据不一致");
 }
+
+- (void)testLoadPublicKeyFromCert {
+	INBRSA *rsa = [INBRSA sharedINBRSA];
+	SecKeyRef publicKeyOld = rsa.publicKey;
+	NSLog(@"before - %@", publicKeyOld);
+	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"DaniateCert" ofType:@"cer"];
+	if ([rsa publicKeyFromDERData:[NSData dataWithContentsOfFile:path]]) {
+		NSLog(@"after - %@", rsa.publicKey);
+	}
+	XCTAssert(YES);
+}
+
+- (void)testLoadPublicKeyFromBase64CertData {
+	NSData *certData = [NSData base64DecodedDataWithString:kBase64PublicKey];
+	INBRSA *rsa = [INBRSA sharedINBRSA];
+	SecKeyRef publicKeyOld = rsa.publicKey;
+	NSLog(@"before - %@", publicKeyOld);
+	if ([rsa publicKeyFromDERData:certData]) {
+		NSLog(@"after - %@", rsa.publicKey);
+	}
+	XCTAssert(YES);
+}
+
 /**
  *  数字签名
  */
@@ -181,8 +229,8 @@
 	INBRSA *rsa = [INBRSA sharedINBRSA];
 	// 自iOS 5.0起，不再支持kSecPaddingPKCS1MD2、kSecPaddingPKCS1MD5
 	NSArray *paddings = @[
-						  //						  @(kSecPaddingPKCS1MD2),/* Unsupported as of iOS 5.0 */
-						  //						  @(kSecPaddingPKCS1MD5),/* Unsupported as of iOS 5.0 */
+//						  @(kSecPaddingPKCS1MD2),/* Unsupported as of iOS 5.0 */
+//						  @(kSecPaddingPKCS1MD5),/* Unsupported as of iOS 5.0 */
 						  @(kSecPaddingPKCS1SHA1),
 						  @(kSecPaddingPKCS1SHA224),
 						  @(kSecPaddingPKCS1SHA256),
@@ -296,6 +344,11 @@
 	
 	alg = kCCHmacAlgSHA512;
 	key = [NSData generateHmacKeyForAlgorithm:alg];
+	hmac = [self.plainData HmacWithAlgorithm:alg key:key];
+	hmacHex = [hmac encodeToHexString];
+	NSLog(@"hmac sha512 - %@", hmacHex);
+	
+	key = [NSData generateSecureRandomData:CC_SHA512_DIGEST_LENGTH << 1];
 	hmac = [self.plainData HmacWithAlgorithm:alg key:key];
 	hmacHex = [hmac encodeToHexString];
 	NSLog(@"hmac sha512 - %@", hmacHex);
