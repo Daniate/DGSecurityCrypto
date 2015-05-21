@@ -347,8 +347,13 @@ AykJuj5Zp2mz4r8uf6yBhORuG3mIXZzUIeH1WlTDOYoxNXJxbUHjWg=="
 	hmac = [self.plainData HmacWithAlgorithm:alg key:key];
 	hmacHex = [hmac encodeToHexString];
 	NSLog(@"hmac sha512 - %@", hmacHex);
-	
+	// 可用长度更长的密钥
 	key = [NSData generateSecureRandomData:CC_SHA512_DIGEST_LENGTH << 1];
+	hmac = [self.plainData HmacWithAlgorithm:alg key:key];
+	hmacHex = [hmac encodeToHexString];
+	NSLog(@"hmac sha512 - %@", hmacHex);
+	// 可用长度更短的密钥
+	key = [NSData generateSecureRandomData:arc4random() % 10 + 1];
 	hmac = [self.plainData HmacWithAlgorithm:alg key:key];
 	hmacHex = [hmac encodeToHexString];
 	NSLog(@"hmac sha512 - %@", hmacHex);
