@@ -10,7 +10,11 @@
 
 ![image](./INBSecurityCrypto_Test.png)
 
-当使用`INBSecurityCrypto.framework`时，如果出现错误：`Include of non-modular header inside framework module ***`
+---
+
+**使用`INBSecurityCrypto.framework`**
+
+如果出现错误：`Include of non-modular header inside framework module ***`
 
 ![image](./INBSecurityCrypto_error.png)
 
@@ -19,6 +23,10 @@
 TARGETS -> Build Settings -> Language - Modules，将`Allow Non-modular includes In Framework Modules`设置为`YES`
 
 ![image](./INBSecurityCrypto_Allow_Non-modular.png)
+
+另外，由于Catagory的存在，还需要在TARGETS -> Build Settings -> Linking -> Other Linker Flags中添加`-ObjC	`
+
+![image](./INBSecurityCrypto_Ohter_Linker_Flags.png)
 
 ---
 
