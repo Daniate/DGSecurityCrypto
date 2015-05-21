@@ -143,9 +143,9 @@
 @interface NSData (INBHmac)
 /**
  *  为指定的Hmac算法生成密钥。
- *  Hmac建议的密钥长度至少为与该Hmac算法哈希函数生成的哈希值的长度。
- *  这里用的就是最短密钥长度。
- *  如果打算使用更长的密钥，请使用`+generateSecureRandomData:`方法生成指定长度的密钥。
+ *  Hmac所建议的密钥长度至少为与该Hmac算法相关的哈希函数生成的哈希值的长度。
+ *  这里用的是建议的最短密钥长度。但建议归建议，可以用更短或更长的密钥。
+ *  如果打算使用其它长度的密钥，请使用`+generateSecureRandomData:`方法。
  *
  *  @param algorithm Hmac算法
  *
