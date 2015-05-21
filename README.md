@@ -18,9 +18,13 @@
 
 #### 公钥加密算法
 
-* RSA
+* RSA（加解密、创建及验证数字签名时，都使用PKCS1 Padding填充模式。数字签名只支持SHA哈希函数。）
 
 #### 分组对称加密算法
+
+只支持PKCS7 Padding、No Padding填充模式。
+
+只支持ECB、CBC模式。
 
 * AES（AES-128、AES-192、AES-256）
 * DES
@@ -28,6 +32,8 @@
 * CAST
 * RC2
 * Blowfish
+
+---
 
 ### 包含的哈希算法
 
@@ -45,6 +51,8 @@
 * SHA384
 * SHA512
 
+---
+
 ### 包含的HMAC
 
 * Hmac SHA1
@@ -53,6 +61,8 @@
 * Hmac SHA384
 * Hmac SHA512
 * Hmac SHA224
+
+---
 
 ### 包含的编码方式
 
