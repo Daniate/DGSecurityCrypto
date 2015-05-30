@@ -127,37 +127,42 @@ static INBRSA *sharedINBRSA = nil;
 - (BOOL)publicKeyFromDERData:(NSData *)data {
 	// 清理之前所生成的公钥。注意，重新获取公钥后，原有的私钥_privateKey可能就与新的公钥不匹配了
 	_publicKey = NULL;
-	SecTrustRef trust = NULL;
-	SecTrustResultType trustResult = kSecTrustResultInvalid;
 	SecCertificateRef cert = SecCertificateCreateWithData(kCFAllocatorDefault, (__bridge CFDataRef)data);
-	SecPolicyRef policy = SecPolicyCreateBasicX509();
-	OSStatus status = SecTrustCreateWithCertificates(cert, policy, &trust);
-	if (status == errSecSuccess && trust) {
-		NSArray *certs = [NSArray arrayWithObject:(__bridge id)cert];
-		status = SecTrustSetAnchorCertificates(trust, (__bridge CFArrayRef)certs);
-		if (status == errSecSuccess) {
-			status = SecTrustEvaluate(trust, &trustResult);
-			// 自签名证书可信
-			if (status == errSecSuccess &&
-				(trustResult == kSecTrustResultUnspecified ||
-				 trustResult == kSecTrustResultProceed)) {
-					_publicKey = SecTrustCopyPublicKey(trust);
+	if (cert) {
+		SecPolicyRef policy = SecPolicyCreateBasicX509();
+		if (policy) {
+			SecTrustRef trust = NULL;
+			OSStatus status = SecTrustCreateWithCertificates(cert, policy, &trust);
+			if (status == errSecSuccess && trust) {
+				NSArray *certs = [NSArray arrayWithObject:(__bridge id)cert];
+				status = SecTrustSetAnchorCertificates(trust, (__bridge CFArrayRef)certs);
+				if (status == errSecSuccess) {
+					SecTrustResultType trustResult = kSecTrustResultInvalid;
+					status = SecTrustEvaluate(trust, &trustResult);
+					// 自签名证书可信
+					if (status == errSecSuccess &&
+						(trustResult == kSecTrustResultUnspecified ||
+						 trustResult == kSecTrustResultProceed)) {
+							_publicKey = SecTrustCopyPublicKey(trust);
+						}
 				}
+			}
+			if (trust) {
+				CFRelease(trust);
+				trust = NULL;
+			}
+			if (policy) {
+				CFRelease(policy);
+				policy = NULL;
+			}
+			if (cert) {
+				CFRelease(cert);
+				cert = NULL;
+			}
+			return (status == errSecSuccess && _publicKey != NULL);
 		}
 	}
-	if (trust) {
-		CFRelease(trust);
-		trust = NULL;
-	}
-	if (policy) {
-		CFRelease(policy);
-		policy = NULL;
-	}
-	if (cert) {
-		CFRelease(cert);
-		cert = NULL;
-	}
-	return (status == errSecSuccess && _publicKey != NULL);
+	return NO;
 }
 
 - (NSData *)encryptDataWithPublicKey:(NSData *)data {

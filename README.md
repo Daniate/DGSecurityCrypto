@@ -20,11 +20,11 @@
 
 需要对项目配置进行修改：
 
-TARGETS -> Build Settings -> Language - Modules，将`Allow Non-modular includes In Framework Modules`设置为`YES`
+TARGETS -> Build Settings -> Language - Modules，将`Allow Non-modular Includes In Framework Modules`设置为`Yes`
 
 ![image](./images/INBSecurityCrypto_Allow_Non-modular.png)
 
-另外，由于Catagory的存在，还需要在TARGETS -> Build Settings -> Linking -> Other Linker Flags中添加`-ObjC	`
+另外，由于Category的存在，还需要在TARGETS -> Build Settings -> Linking -> Other Linker Flags中添加`-ObjC`
 
 ![image](./images/INBSecurityCrypto_Other_Linker_Flags.png)
 

@@ -170,7 +170,7 @@ static int numberFromHex(unsigned char hex) {
 			for (NSUInteger i = 0, j = 0; i < len; j++) {
 				unsigned char f = numberFromHex(bytes[i]) << 4;
 				i++;
-				f = f | numberFromHex(bytes[i]);
+				f |= numberFromHex(bytes[i]);
 				i++;
 				buf[j] = f;
 			}
