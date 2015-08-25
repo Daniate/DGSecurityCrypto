@@ -15,13 +15,13 @@
 /**
  *  对自身进行Base-64编码
  *
- *  @return Base-64编码字符串（每隔64个字符，就加入回车符'\r'与换行符'\n'，但结尾处不会加入，URL Unsafe）
+ *  @return Base-64编码字符串（无换行，URL Unsafe）
  */
 - (NSString *)base64EncodedString;
 /**
  *  对自身进行Base-64编码
  *
- *  @return Base-64编码数据（每隔64个字符，就加入回车符'\r'与换行符'\n'，但结尾处不会加入，URL Unsafe）
+ *  @return Base-64编码数据（无换行，URL Unsafe）
  */
 - (NSData *)base64EncodedData;
 /**
