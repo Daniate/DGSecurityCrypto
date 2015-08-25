@@ -16,8 +16,7 @@
 - (NSString *)base64EncodedString {
 #ifdef __IPHONE_7_0
 	if (INBIOS7_0_0OrLater) {
-		NSDataBase64EncodingOptions options = NSDataBase64Encoding64CharacterLineLength|NSDataBase64EncodingEndLineWithCarriageReturn|NSDataBase64EncodingEndLineWithLineFeed;
-		return [self base64EncodedStringWithOptions:options];
+		return [self base64EncodedStringWithOptions:0];
 	} else {
 #endif
 		return [self base64Encoding];
@@ -28,8 +27,7 @@
 - (NSData *)base64EncodedData {
 #ifdef __IPHONE_7_0
 	if (INBIOS7_0_0OrLater) {
-		NSDataBase64EncodingOptions options = NSDataBase64Encoding64CharacterLineLength|NSDataBase64EncodingEndLineWithCarriageReturn|NSDataBase64EncodingEndLineWithLineFeed;
-		return [self base64EncodedDataWithOptions:options];
+		return [self base64EncodedDataWithOptions:0];
 	} else {
 #endif
 		return [[self base64Encoding] dataUsingEncoding:NSUTF8StringEncoding];
@@ -111,29 +109,29 @@
 @end
 
 @implementation NSData (INBHex)
-static const unsigned char digits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
-//static const unsigned char digits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+static const char *digitsHex = "0123456789abcdef";
+//static const char *digitsHex = "0123456789ABCDEF";
 - (NSData *)encodeToHexData {
-	NSData *encodedData = nil;
-	if (self) {
-		NSUInteger len = self.length;
-		unsigned char *bytes = (unsigned char *)self.bytes;
-		size_t bufSize = (len << 1);
-		unsigned char *buf = malloc(bufSize);
-		if (buf) {
-			memset(buf, 0x0, len);
-			for (NSUInteger i = 0, j = 0; i < len; i++) {
-				buf[j] = digits[(0xF0 & bytes[i]) >> 4];
-				j++;
-				buf[j] = digits[0x0F & bytes[i]];
-				j++;
-			}
-			encodedData = [NSData dataWithBytes:buf length:bufSize];
-			free(buf);
-			buf = NULL;
-		}
-	}
-	return encodedData;
+    NSData *encodedData = nil;
+    if (self) {
+        NSUInteger len = self.length;
+        unsigned char *bytes = (unsigned char *)self.bytes;
+        size_t bufSize = (len << 1);
+        unsigned char *buf = malloc(bufSize);
+        if (buf) {
+            memset(buf, 0x0, bufSize);
+            for (NSUInteger i = 0, j = 0; i < len; i++) {
+                buf[j] = *(digitsHex + ((0xF0 & bytes[i]) >> 4));
+                j++;
+                buf[j] = *(digitsHex + (0x0F & bytes[i]));
+                j++;
+            }
+            encodedData = [NSData dataWithBytes:buf length:bufSize];
+            free(buf);
+            buf = NULL;
+        }
+    }
+    return encodedData;
 }
 /**
  *  将十六进制字符转换为十进制数字
@@ -159,27 +157,28 @@ static int numberFromHex(unsigned char hex) {
 }
 
 - (NSData *)decodeFromHexData {
-	NSData *decodedData = nil;
-	if (self) {
-		NSUInteger len = self.length;
-		NSAssert((len & 0x01) == 0, @"数据长度必须是偶数");
-		unsigned char *bytes = (unsigned char *)self.bytes;
-		NSUInteger bufSize = (len >> 1) * sizeof(unsigned char);
-		unsigned char *buf = malloc(bufSize);
-		if (buf) {
-			for (NSUInteger i = 0, j = 0; i < len; j++) {
-				unsigned char f = numberFromHex(bytes[i]) << 4;
-				i++;
-				f |= numberFromHex(bytes[i]);
-				i++;
-				buf[j] = f;
-			}
-			decodedData = [NSData dataWithBytes:buf length:bufSize];
-			free(buf);
-			buf = NULL;
-		}
-	}
-	return decodedData;
+    NSData *decodedData = nil;
+    if (self) {
+        NSUInteger len = self.length;
+        NSAssert((len & 0x1) == 0x0, @"数据长度必须是偶数");
+        unsigned char *bytes = (unsigned char *)self.bytes;
+        NSUInteger bufSize = (len >> 1) * sizeof(unsigned char);
+        unsigned char *buf = malloc(bufSize);
+        if (buf) {
+            memset(buf, 0x0, bufSize);
+            for (NSUInteger i = 0, j = 0; i < len; j++) {
+                unsigned char f = numberFromHex(bytes[i]) << 4;
+                i++;
+                f |= numberFromHex(bytes[i]);
+                i++;
+                buf[j] = f;
+            }
+            decodedData = [NSData dataWithBytes:buf length:bufSize];
+            free(buf);
+            buf = NULL;
+        }
+    }
+    return decodedData;
 }
 
 - (NSString *)encodeToHexString {
