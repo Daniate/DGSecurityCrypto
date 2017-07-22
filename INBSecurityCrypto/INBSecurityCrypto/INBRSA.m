@@ -9,6 +9,9 @@
 #import "INBRSA.h"
 #import "NSData+INB.h"
 
+NSUInteger const INBRSAKeySizeInBits2048 = 1 << 11;
+NSUInteger const INBRSAKeySizeInBits1024 = 1 << 10;
+
 @interface INBRSA () {
 	SecKeyRef _privateKey;
 	SecKeyRef _publicKey;
@@ -18,7 +21,7 @@
 
 @implementation INBRSA
 static INBRSA *sharedINBRSA = nil;
-+ (instancetype)sharedINBRSA {
++ (nonnull instancetype)sharedINBRSA {
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		sharedINBRSA = [[super allocWithZone:NULL] init];
@@ -48,8 +51,8 @@ static INBRSA *sharedINBRSA = nil;
 	return [self generateKeys:INBRSAKeySizeInBits2048];
 }
 
-- (BOOL)generateKeys:(INBRSAKeySizeInBits)keySizeInBits {
-	NSParameterAssert(keySizeInBits == 1 << 11 || keySizeInBits == 1 << 10);
+- (BOOL)generateKeys:(NSUInteger)keySizeInBits {
+	NSParameterAssert(keySizeInBits == INBRSAKeySizeInBits2048 || keySizeInBits == INBRSAKeySizeInBits1024);
 	// 即便设置了公钥解密、私钥加密，但测试的结果是返回-4（errSecUnimplemented），推测：iOS未实现公钥解密、私钥加密
 //	NSDictionary *privateKeyAttrs = @{
 //									  (__bridge __strong id)kSecAttrCanEncrypt: (__bridge __strong id)kCFBooleanTrue,
@@ -71,107 +74,165 @@ static INBRSA *sharedINBRSA = nil;
 	return (status == errSecSuccess);
 }
 
-- (BOOL)keysFromPersonalInformationExchangeFile:(NSString *)filePath password:(NSString *)pwd {
+- (BOOL)keysFromPersonalInformationExchangeFile:(NSString * _Nonnull)filePath password:(NSString * _Nullable)pwd {
+    if (filePath == nil) {
+        return NO;
+    }
 	return [self keysFromData:[NSData dataWithContentsOfFile:filePath] password:pwd];
 }
 
-- (BOOL)keysFromData:(NSData *)data password:(NSString *)pwd {
+- (void)_freeDictionary:(CFDictionaryRef * _Nullable)dictionary array:(CFArrayRef * _Nullable)array {
+    if (dictionary && *dictionary) {
+        CFRelease(*dictionary);
+        *dictionary = NULL;
+    }
+    if (array && *array) {
+        CFRelease(*array);
+        *array = NULL;
+    }
+}
+
+- (BOOL)keysFromData:(NSData * _Nonnull)data password:(NSString * _Nullable)pwd {
+    if (data == nil) {
+        return NO;
+    }
 	// 清理之前所生成的密钥，避免当无法获取密钥时，_publicKey、_privateKey依旧有值
 	_publicKey = NULL;
 	_privateKey = NULL;
-	const void *keys[] = {
-		kSecImportExportPassphrase,
-	};
-	const void *values[] = {
-		(__bridge CFStringRef)pwd,
-	};
-	CFDictionaryRef options = CFDictionaryCreate(kCFAllocatorDefault, keys, values, 1, NULL, NULL);
+    CFDictionaryRef options = NULL;
+    if (pwd) {
+        const void *keys[] = {
+            kSecImportExportPassphrase,
+        };
+        const void *values[] = {
+            (__bridge CFStringRef)pwd,
+        };
+        options = CFDictionaryCreate(kCFAllocatorDefault, keys, values, 1, NULL, NULL);
+    } else {
+        options = CFDictionaryCreate(kCFAllocatorDefault, NULL, NULL, 0, NULL, NULL);
+    }
+    if (options == NULL) {
+        return NO;
+    }
 	CFArrayRef items = CFArrayCreate(kCFAllocatorDefault, NULL, 0, NULL);
+    if (items == NULL) {
+        [self _freeDictionary:&options array:NULL];
+        return NO;
+    }
 	OSStatus status = SecPKCS12Import((__bridge CFDataRef)data, options, &items);
-	if (status == errSecSuccess) {
-		CFDictionaryRef identity_trust_dic = CFArrayGetValueAtIndex(items, 0);
-		SecIdentityRef identity = (SecIdentityRef)CFDictionaryGetValue(identity_trust_dic, kSecImportItemIdentity);
-		SecTrustRef trust = (SecTrustRef)CFDictionaryGetValue(identity_trust_dic, kSecImportItemTrust);
-		// certs数组中包含了所有的证书
-		CFArrayRef certs = (CFArrayRef)CFDictionaryGetValue(identity_trust_dic, kSecImportItemCertChain);
-		if ([(__bridge NSArray *)certs count] && trust && identity) {
-			// 如果没有下面一句，自签名证书的评估信任结果永远是kSecTrustResultRecoverableTrustFailure
-			status = SecTrustSetAnchorCertificates(trust, certs);
-			if (status == errSecSuccess) {
-				SecTrustResultType trustResultType;
-				// 通常, 返回的trust result type应为kSecTrustResultUnspecified，如果是，就可以说明签名证书是可信的
-				status = SecTrustEvaluate(trust, &trustResultType);
-				if ((trustResultType == kSecTrustResultUnspecified || trustResultType == kSecTrustResultProceed) && status == errSecSuccess) {
-					// 证书可信，可以提取私钥与公钥，然后可以使用公私钥进行加解密操作
-					status = SecIdentityCopyPrivateKey(identity, &_privateKey);
-					_publicKey = SecTrustCopyPublicKey(trust);
-				} else {
-					status = -1;
-				}
-			}
-		} else {
-			status = -1;
-		}
-	}
-	if (options) {
-		CFRelease(options);
-		options = NULL;
-	}
-	if (items) {
-		CFRelease(items);
-		items = NULL;
-	}
-	return (status == errSecSuccess);
+    if (status != errSecSuccess) {
+        [self _freeDictionary:&options array:&items];
+        return NO;
+    }
+    CFDictionaryRef identity_trust_dic = CFArrayGetValueAtIndex(items, 0);
+    SecIdentityRef identity = (SecIdentityRef)CFDictionaryGetValue(identity_trust_dic, kSecImportItemIdentity);
+    if (identity == NULL) {
+        [self _freeDictionary:&options array:&items];
+        return NO;
+    }
+    SecTrustRef trust = (SecTrustRef)CFDictionaryGetValue(identity_trust_dic, kSecImportItemTrust);
+    if (trust == NULL) {
+        [self _freeDictionary:&options array:&items];
+        return NO;
+    }
+    // certs数组中包含了所有的证书
+    CFArrayRef certs = (CFArrayRef)CFDictionaryGetValue(identity_trust_dic, kSecImportItemCertChain);
+    if ([(__bridge NSArray *)certs count] == 0) {
+        [self _freeDictionary:&options array:&items];
+        return NO;
+    }
+    // 如果没有下面一句，自签名证书的评估信任结果永远是kSecTrustResultRecoverableTrustFailure
+    status = SecTrustSetAnchorCertificates(trust, certs);
+    if (status != errSecSuccess) {
+        [self _freeDictionary:&options array:&items];
+        return NO;
+    }
+    SecTrustResultType trustResultType;
+    // 通常, 返回的trust result type应为kSecTrustResultUnspecified，如果是，就可以说明签名证书是可信的
+    status = SecTrustEvaluate(trust, &trustResultType);
+    if (status != errSecSuccess) {
+        [self _freeDictionary:&options array:&items];
+        return NO;
+    }
+    if (trustResultType == kSecTrustResultUnspecified ||
+        trustResultType == kSecTrustResultProceed) {
+        // 证书可信，可以提取私钥与公钥，然后可以使用公私钥进行加解密操作
+        status = SecIdentityCopyPrivateKey(identity, &_privateKey);
+        _publicKey = SecTrustCopyPublicKey(trust);
+    }
+	[self _freeDictionary:&options array:&items];
+	return (status == errSecSuccess && _privateKey && _publicKey);
 }
 
-- (BOOL)publicKeyFromDERData:(NSData *)data {
-	// 清理之前所生成的公钥。注意，重新获取公钥后，原有的私钥_privateKey可能就与新的公钥不匹配了
-	_publicKey = NULL;
-	SecCertificateRef cert = SecCertificateCreateWithData(kCFAllocatorDefault, (__bridge CFDataRef)data);
-	if (cert) {
-		SecPolicyRef policy = SecPolicyCreateBasicX509();
-		if (policy) {
-			SecTrustRef trust = NULL;
-			OSStatus status = SecTrustCreateWithCertificates(cert, policy, &trust);
-			if (status == errSecSuccess && trust) {
-				NSArray *certs = [NSArray arrayWithObject:(__bridge id)cert];
-				status = SecTrustSetAnchorCertificates(trust, (__bridge CFArrayRef)certs);
-				if (status == errSecSuccess) {
-					SecTrustResultType trustResult = kSecTrustResultInvalid;
-					status = SecTrustEvaluate(trust, &trustResult);
-					// 自签名证书可信
-					if (status == errSecSuccess &&
-						(trustResult == kSecTrustResultUnspecified ||
-						 trustResult == kSecTrustResultProceed)) {
-							_publicKey = SecTrustCopyPublicKey(trust);
-						}
-				}
-			}
-			if (trust) {
-				CFRelease(trust);
-				trust = NULL;
-			}
-			if (policy) {
-				CFRelease(policy);
-				policy = NULL;
-			}
-			if (cert) {
-				CFRelease(cert);
-				cert = NULL;
-			}
-			return (status == errSecSuccess && _publicKey != NULL);
-		}
-	}
-	return NO;
+- (void)_freeCertificate:(SecCertificateRef * _Nullable)cert
+                  policy:(SecPolicyRef * _Nullable)policy
+                   trust:(SecTrustRef * _Nullable)trust {
+    if (trust && *trust) {
+        CFRelease(*trust);
+        *trust = NULL;
+    }
+    if (policy && *policy) {
+        CFRelease(*policy);
+        *policy = NULL;
+    }
+    if (cert && *cert) {
+        CFRelease(*cert);
+        *cert = NULL;
+    }
 }
 
-- (NSData *)encryptDataWithPublicKey:(NSData *)data {
+- (BOOL)publicKeyFromDERData:(NSData * _Nonnull)data {
+    if (data == nil) {
+        return NO;
+    }
+    SecCertificateRef cert = SecCertificateCreateWithData(kCFAllocatorDefault, (__bridge CFDataRef)data);
+    if (cert == NULL) {
+        return NO;
+    }
+    SecPolicyRef policy = SecPolicyCreateBasicX509();
+    if (policy == NULL) {
+        [self _freeCertificate:&cert policy:NULL trust:NULL];
+        return NO;
+    }
+    SecTrustRef trust = NULL;
+    OSStatus status = SecTrustCreateWithCertificates(cert, policy, &trust);
+    if (trust == NULL) {
+        [self _freeCertificate:&cert policy:&policy trust:NULL];
+        return NO;
+    }
+    if (status != errSecSuccess) {
+        [self _freeCertificate:&cert policy:&policy trust:&trust];
+        return NO;
+    }
+    NSArray *certs = [NSArray arrayWithObject:(__bridge id)cert];
+    status = SecTrustSetAnchorCertificates(trust, (__bridge CFArrayRef)certs);
+    if (status != errSecSuccess) {
+        [self _freeCertificate:&cert policy:&policy trust:&trust];
+        return NO;
+    }
+    SecTrustResultType trustResult = kSecTrustResultInvalid;
+    status = SecTrustEvaluate(trust, &trustResult);
+    if (status != errSecSuccess) {
+        [self _freeCertificate:&cert policy:&policy trust:&trust];
+        return NO;
+    }
+    // 自签名证书可信
+    if (trustResult == kSecTrustResultUnspecified ||
+        trustResult == kSecTrustResultProceed) {
+        // 重新获取公钥后，原有的私钥_privateKey可能就与新的公钥不匹配了
+        _publicKey = SecTrustCopyPublicKey(trust);
+    }
+    [self _freeCertificate:&cert policy:&policy trust:&trust];
+    return YES;
+}
+
+- (NSData * _Nullable)encryptDataWithPublicKey:(NSData * _Nonnull)data {
 	return [self doCipherWithData:data
 							  key:self.publicKey
 						operation:kCCEncrypt];
 }
 
-- (NSData *)decryptDataWithPrivateKey:(NSData *)data {
+- (NSData * _Nullable)decryptDataWithPrivateKey:(NSData * _Nonnull)data {
 	return [self doCipherWithData:data
 							  key:self.privateKey
 						operation:kCCDecrypt];
@@ -189,9 +250,9 @@ static INBRSA *sharedINBRSA = nil;
 //						operation:kCCDecrypt];
 //}
 
-- (NSData *)doCipherWithData:(NSData *)data
+- (NSData * _Nullable)doCipherWithData:(NSData * _Nonnull)data
 						 key:(SecKeyRef)key
-				   operation:(INBRSAOperation)operation {
+				   operation:(CCOperation)operation {
 	if (data.length == 0 ||
 		key == NULL ||
 		(operation != kCCEncrypt &&
@@ -255,44 +316,44 @@ static INBRSA *sharedINBRSA = nil;
 	return outData;
 }
 
-- (NSData *)signDataWithPrivateKey:(NSData *)data {
+- (NSData * _Nullable)signDataWithPrivateKey:(NSData * _Nonnull)data {
 	// 消息摘要
 	NSData *digest = nil;
 	switch (self.padding) {
 		// 自iOS 5.0起，不再支持kSecPaddingPKCS1MD2、kSecPaddingPKCS1MD5
 //		case kSecPaddingPKCS1MD2:/* Unsupported as of iOS 5.0 */
 //		{
-//			digest = [data MD2];
+//			digest = [data dg_MD2];
 //			break;
 //		}
 //		case kSecPaddingPKCS1MD5:/* Unsupported as of iOS 5.0 */
 //		{
-//			digest = [data MD5];
+//			digest = [data dg_MD5];
 //			break;
 //		}
 		case kSecPaddingPKCS1SHA1:
 		{
-			digest = [data SHA1];
+			digest = [data dg_SHA1];
 			break;
 		}
 		case kSecPaddingPKCS1SHA224:
 		{
-			digest = [data SHA224];
+			digest = [data dg_SHA224];
 			break;
 		}
 		case kSecPaddingPKCS1SHA256:
 		{
-			digest = [data SHA256];
+			digest = [data dg_SHA256];
 			break;
 		}
 		case kSecPaddingPKCS1SHA384:
 		{
-			digest = [data SHA384];
+			digest = [data dg_SHA384];
 			break;
 		}
 		case kSecPaddingPKCS1SHA512:
 		{
-			digest = [data SHA512];
+			digest = [data dg_SHA512];
 			break;
 		}
 		default:
@@ -318,44 +379,44 @@ static INBRSA *sharedINBRSA = nil;
 	return outData;
 }
 
-- (BOOL)verifyDataWithPublicKey:(NSData *)data digitalSignature:(NSData *)digitalSignature {
+- (BOOL)verifyDataWithPublicKey:(NSData * _Nonnull)data digitalSignature:(NSData * _Nonnull)digitalSignature {
 	// 消息摘要
 	NSData *digest = nil;
 	switch (self.padding) {
 		// 自iOS 5.0起，不再支持kSecPaddingPKCS1MD2、kSecPaddingPKCS1MD5
 //		case kSecPaddingPKCS1MD2:
 //		{
-//			digest = [data MD2];/* Unsupported as of iOS 5.0 */
+//			digest = [data dg_MD2];/* Unsupported as of iOS 5.0 */
 //			break;
 //		}
 //		case kSecPaddingPKCS1MD5:
 //		{
-//			digest = [data MD5];/* Unsupported as of iOS 5.0 */
+//			digest = [data dg_MD5];/* Unsupported as of iOS 5.0 */
 //			break;
 //		}
 		case kSecPaddingPKCS1SHA1:
 		{
-			digest = [data SHA1];
+			digest = [data dg_SHA1];
 			break;
 		}
 		case kSecPaddingPKCS1SHA224:
 		{
-			digest = [data SHA224];
+			digest = [data dg_SHA224];
 			break;
 		}
 		case kSecPaddingPKCS1SHA256:
 		{
-			digest = [data SHA256];
+			digest = [data dg_SHA256];
 			break;
 		}
 		case kSecPaddingPKCS1SHA384:
 		{
-			digest = [data SHA384];
+			digest = [data dg_SHA384];
 			break;
 		}
 		case kSecPaddingPKCS1SHA512:
 		{
-			digest = [data SHA512];
+			digest = [data dg_SHA512];
 			break;
 		}
 		default:

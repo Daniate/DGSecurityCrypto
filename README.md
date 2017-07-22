@@ -1,48 +1,42 @@
 # INBSecurityCrypto
 
-## 密码学相关内容
+## Cryptography contents
 
-可通过Target `INBSecurityCryptoAggregate`构建framework
+* You can build a dynamic framework via the `INBSecurityCrypto` target.
 
-![image](./images/INBSecurityCrypto_architectures.png)
-
-可通过Target `INBSecurityCrypto`，进行测试，详细内容请参考测试代码及相关注释
+* You can test the codes via the `INBSecurityCryptoTests` target.
 
 ![image](./images/INBSecurityCrypto_Test.png)
 
----
+### Using
 
-**使用`INBSecurityCrypto.framework`**
+For iOS 8 and later, you can use dynamic framework. (The deployment target `greater than or equal to 8.0.0`.)
 
-如果出现错误：`Include of non-modular header inside framework module ***`
+For iOS 6 and later, you can add the source codes to project. (The deployment target `less than 8.0.0`.)
+
+If an error occurs：`Include of non-modular header inside framework module ***`
 
 ![image](./images/INBSecurityCrypto_error.png)
 
-需要对项目配置进行修改：
-
-TARGETS -> Build Settings -> Language - Modules，将`Allow Non-modular Includes In Framework Modules`设置为`Yes`
+Yous can set `Allow Non-modular Includes In Framework Modules` to `YES` (In `TARGETS -> Build Settings -> Language - Modules`)
 
 ![image](./images/INBSecurityCrypto_Allow_Non-modular.png)
 
-另外，由于Category的存在，还需要在TARGETS -> Build Settings -> Linking -> Other Linker Flags中添加`-ObjC`
+You may should add `-ObjC` to `TARGETS -> Build Settings -> Linking -> Other Linker Flags`.
 
 ![image](./images/INBSecurityCrypto_Other_Linker_Flags.png)
 
----
+### Supported Encryption Algorithms
 
-### 包含的加密算法
+#### Public-key Encryption Algorithm
 
-> 不包含流加密算法RC4
+* RSA（Only support PKCS1 Padding mode. Only support the use of secure hash algorithms when sign data with private key.）
 
-#### 公钥加密算法
+#### Block Symmetric Encryption Algorithms
 
-* RSA（加解密、创建及验证数字签名时，都使用PKCS1 Padding填充模式。数字签名只支持SHA哈希函数。）
+Only support PKCS7 Padding、No Padding modes.
 
-#### 分组对称加密算法
-
-只支持PKCS7 Padding、No Padding填充模式。
-
-只支持ECB、CBC模式。
+Only support ECB、CBC modes.
 
 * AES（AES-128、AES-192、AES-256）
 * DES
@@ -51,17 +45,15 @@ TARGETS -> Build Settings -> Language - Modules，将`Allow Non-modular Includes
 * RC2
 * Blowfish
 
----
+### Supported Hash Algorithms
 
-### 包含的哈希算法
-
-#### 消息摘要算法
+#### Message Digest
 
 * MD 2
 * MD 4
 * MD 5
 
-#### 安全哈希算法
+#### Secure Hash Algorithms
 
 * SHA1
 * SHA224
@@ -69,24 +61,17 @@ TARGETS -> Build Settings -> Language - Modules，将`Allow Non-modular Includes
 * SHA384
 * SHA512
 
----
+### Supported HMACs(Hash-based Message Authentication Code)
 
-### 包含的HMAC
-
-* Hmac SHA1
 * Hmac MD5
+* Hmac SHA1
+* Hmac SHA224
 * Hmac SHA256
 * Hmac SHA384
 * Hmac SHA512
-* Hmac SHA224
 
----
+### Supported Encoding Algorithms
 
-### 包含的编码方式
-
-* Base-64
+* Base64
 * Hex
 
----
-
-**欢迎交流、斧正**

@@ -12,9 +12,9 @@
  *  TripleDES，俗称3DES。3DES加解密，使用CBC及PKCS7Padding。
  */
 @interface INBTripleDES : NSObject
-@property (nonatomic, copy, readonly) NSData *key;
-@property (nonatomic, copy, readonly) NSData *iv;
-+ (instancetype)sharedINBTripleDES;
+@property (nonatomic, copy, readonly, nullable) NSData *key;
+@property (nonatomic, copy, readonly, nullable) NSData *iv;
++ (nonnull instancetype)sharedINBTripleDES;
 /**
  *  更新密钥。密钥大小为kCCKeySize3DES（24）字节。
  */
@@ -30,7 +30,7 @@
  *
  *  @return 加密后的数据（密文数据）
  */
-- (NSData *)tripleDESEncrypt:(NSData *)plainData;
+- (NSData * _Nullable)tripleDESEncrypt:(NSData * _Nonnull)plainData;
 /**
  *  3DES解密
  *
@@ -38,7 +38,7 @@
  *
  *  @return 解密后的数据（明文数据）
  */
-- (NSData *)tripleDESDecrypt:(NSData *)cipherData;
+- (NSData * _Nullable)tripleDESDecrypt:(NSData * _Nonnull)cipherData;
 /**
  *  加解密。当需要使用指定的密钥或初始化向量时，可以使用该方法。会修改_key、_iv。
  *
@@ -49,8 +49,8 @@
  *
  *  @return 加密/解密后的数据
  */
-- (NSData *)doCipher:(NSData *)data
-				 key:(NSData *)key
-				  iv:(NSData *)iv
-		   operation:(CCOperation)operation;
+- (NSData * _Nullable)doCipher:(NSData * _Nonnull)data
+                           key:(NSData * _Nonnull)key
+                            iv:(NSData * _Nullable)iv
+                     operation:(CCOperation)operation;
 @end

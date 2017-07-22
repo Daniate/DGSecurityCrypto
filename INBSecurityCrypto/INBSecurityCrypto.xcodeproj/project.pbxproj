@@ -6,186 +6,168 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		14156D521B09C9D6007182B2 /* INBSecurityCryptoAggregate */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 14156D531B09C9D6007182B2 /* Build configuration list for PBXAggregateTarget "INBSecurityCryptoAggregate" */;
-			buildPhases = (
-				14156D561B09CA09007182B2 /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = INBSecurityCryptoAggregate;
-			productName = INBSecurityCryptoAggregate;
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
-		14156D3C1B09C98B007182B2 /* INBSecurityCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 14156D3B1B09C98B007182B2 /* INBSecurityCrypto.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		14156D421B09C98B007182B2 /* INBSecurityCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14156D361B09C98B007182B2 /* INBSecurityCrypto.framework */; };
-		14156D491B09C98C007182B2 /* INBSecurityCryptoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 14156D481B09C98C007182B2 /* INBSecurityCryptoTests.m */; };
-		14156D5A1B09CA2A007182B2 /* DaniateCert.pem in Resources */ = {isa = PBXBuildFile; fileRef = 14156D571B09CA2A007182B2 /* DaniateCert.pem */; };
-		14156D5B1B09CA2A007182B2 /* DaniateCert.cer in Resources */ = {isa = PBXBuildFile; fileRef = 14156D581B09CA2A007182B2 /* DaniateCert.cer */; };
-		14156D5C1B09CA2A007182B2 /* DaniateCert.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 14156D591B09CA2A007182B2 /* DaniateCert.p12 */; };
-		14156D8A1B09CA9E007182B2 /* NSData+INB.h in Headers */ = {isa = PBXBuildFile; fileRef = 14156D5F1B09CA9E007182B2 /* NSData+INB.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		14156D8B1B09CA9E007182B2 /* NSData+INB.m in Sources */ = {isa = PBXBuildFile; fileRef = 14156D601B09CA9E007182B2 /* NSData+INB.m */; };
-		14156D901B09CA9E007182B2 /* NSString+INB.h in Headers */ = {isa = PBXBuildFile; fileRef = 14156D651B09CA9E007182B2 /* NSString+INB.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		14156D911B09CA9E007182B2 /* NSString+INB.m in Sources */ = {isa = PBXBuildFile; fileRef = 14156D661B09CA9E007182B2 /* NSString+INB.m */; };
-		14156DA21B09CA9E007182B2 /* INBAES.h in Headers */ = {isa = PBXBuildFile; fileRef = 14156D771B09CA9E007182B2 /* INBAES.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		14156DA31B09CA9E007182B2 /* INBAES.m in Sources */ = {isa = PBXBuildFile; fileRef = 14156D781B09CA9E007182B2 /* INBAES.m */; };
-		14156DA41B09CA9E007182B2 /* INBTripleDES.h in Headers */ = {isa = PBXBuildFile; fileRef = 14156D791B09CA9E007182B2 /* INBTripleDES.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		14156DA51B09CA9E007182B2 /* INBTripleDES.m in Sources */ = {isa = PBXBuildFile; fileRef = 14156D7A1B09CA9E007182B2 /* INBTripleDES.m */; };
-		14156DA61B09CA9E007182B2 /* INBRSA.h in Headers */ = {isa = PBXBuildFile; fileRef = 14156D7B1B09CA9E007182B2 /* INBRSA.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		14156DA71B09CA9E007182B2 /* INBRSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 14156D7C1B09CA9E007182B2 /* INBRSA.m */; };
-		14156DB01B09CA9E007182B2 /* INBMacroAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 14156D851B09CA9E007182B2 /* INBMacroAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		14FFA20E1F22FEC200B29295 /* INBSecurityCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 14FFA20C1F22FEC200B29295 /* INBSecurityCrypto.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		14FFA21B1F23026300B29295 /* INBSecurityCryptoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FFA21A1F23026300B29295 /* INBSecurityCryptoTests.m */; };
+		14FFA21D1F23026300B29295 /* INBSecurityCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14FFA2091F22FEC200B29295 /* INBSecurityCrypto.framework */; };
+		14FFA22E1F23029300B29295 /* INBAES.h in Headers */ = {isa = PBXBuildFile; fileRef = 14FFA2231F23029300B29295 /* INBAES.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		14FFA22F1F23029300B29295 /* INBAES.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FFA2241F23029300B29295 /* INBAES.m */; };
+		14FFA2301F23029300B29295 /* INBMacroAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 14FFA2251F23029300B29295 /* INBMacroAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		14FFA2311F23029300B29295 /* INBRSA.h in Headers */ = {isa = PBXBuildFile; fileRef = 14FFA2261F23029300B29295 /* INBRSA.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		14FFA2321F23029300B29295 /* INBRSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FFA2271F23029300B29295 /* INBRSA.m */; };
+		14FFA2331F23029300B29295 /* INBTripleDES.h in Headers */ = {isa = PBXBuildFile; fileRef = 14FFA2281F23029300B29295 /* INBTripleDES.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		14FFA2341F23029300B29295 /* INBTripleDES.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FFA2291F23029300B29295 /* INBTripleDES.m */; };
+		14FFA2351F23029300B29295 /* NSData+INB.h in Headers */ = {isa = PBXBuildFile; fileRef = 14FFA22A1F23029300B29295 /* NSData+INB.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		14FFA2361F23029300B29295 /* NSData+INB.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FFA22B1F23029300B29295 /* NSData+INB.m */; };
+		14FFA2371F23029300B29295 /* NSString+INB.h in Headers */ = {isa = PBXBuildFile; fileRef = 14FFA22C1F23029300B29295 /* NSString+INB.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		14FFA2381F23029300B29295 /* NSString+INB.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FFA22D1F23029300B29295 /* NSString+INB.m */; };
+		14FFA23C1F23035C00B29295 /* DaniateCert.cer in Resources */ = {isa = PBXBuildFile; fileRef = 14FFA2391F23035C00B29295 /* DaniateCert.cer */; };
+		14FFA23D1F23035C00B29295 /* DaniateCert.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 14FFA23A1F23035C00B29295 /* DaniateCert.p12 */; };
+		14FFA23E1F23035C00B29295 /* DaniateCert.pem in Resources */ = {isa = PBXBuildFile; fileRef = 14FFA23B1F23035C00B29295 /* DaniateCert.pem */; };
+		14FFA2411F230BA600B29295 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14FFA2401F230BA600B29295 /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		14156D431B09C98C007182B2 /* PBXContainerItemProxy */ = {
+		14FFA21E1F23026300B29295 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 14156D2D1B09C98B007182B2 /* Project object */;
+			containerPortal = 14FFA2001F22FEC200B29295 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 14156D351B09C98B007182B2;
+			remoteGlobalIDString = 14FFA2081F22FEC200B29295;
 			remoteInfo = INBSecurityCrypto;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		14156D361B09C98B007182B2 /* INBSecurityCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = INBSecurityCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		14156D3A1B09C98B007182B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		14156D3B1B09C98B007182B2 /* INBSecurityCrypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = INBSecurityCrypto.h; sourceTree = "<group>"; };
-		14156D411B09C98B007182B2 /* INBSecurityCryptoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = INBSecurityCryptoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		14156D471B09C98C007182B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		14156D481B09C98C007182B2 /* INBSecurityCryptoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = INBSecurityCryptoTests.m; sourceTree = "<group>"; };
-		14156D571B09CA2A007182B2 /* DaniateCert.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DaniateCert.pem; sourceTree = "<group>"; };
-		14156D581B09CA2A007182B2 /* DaniateCert.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = DaniateCert.cer; sourceTree = "<group>"; };
-		14156D591B09CA2A007182B2 /* DaniateCert.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = DaniateCert.p12; sourceTree = "<group>"; };
-		14156D5F1B09CA9E007182B2 /* NSData+INB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+INB.h"; sourceTree = "<group>"; };
-		14156D601B09CA9E007182B2 /* NSData+INB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+INB.m"; sourceTree = "<group>"; };
-		14156D651B09CA9E007182B2 /* NSString+INB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+INB.h"; sourceTree = "<group>"; };
-		14156D661B09CA9E007182B2 /* NSString+INB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+INB.m"; sourceTree = "<group>"; };
-		14156D771B09CA9E007182B2 /* INBAES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INBAES.h; sourceTree = "<group>"; };
-		14156D781B09CA9E007182B2 /* INBAES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INBAES.m; sourceTree = "<group>"; };
-		14156D791B09CA9E007182B2 /* INBTripleDES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INBTripleDES.h; sourceTree = "<group>"; };
-		14156D7A1B09CA9E007182B2 /* INBTripleDES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INBTripleDES.m; sourceTree = "<group>"; };
-		14156D7B1B09CA9E007182B2 /* INBRSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INBRSA.h; sourceTree = "<group>"; };
-		14156D7C1B09CA9E007182B2 /* INBRSA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INBRSA.m; sourceTree = "<group>"; };
-		14156D851B09CA9E007182B2 /* INBMacroAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INBMacroAdditions.h; sourceTree = "<group>"; };
+		14FFA2091F22FEC200B29295 /* INBSecurityCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = INBSecurityCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		14FFA20C1F22FEC200B29295 /* INBSecurityCrypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = INBSecurityCrypto.h; sourceTree = "<group>"; };
+		14FFA20D1F22FEC200B29295 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		14FFA2181F23026300B29295 /* INBSecurityCryptoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = INBSecurityCryptoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		14FFA21A1F23026300B29295 /* INBSecurityCryptoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = INBSecurityCryptoTests.m; sourceTree = "<group>"; };
+		14FFA21C1F23026300B29295 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		14FFA2231F23029300B29295 /* INBAES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INBAES.h; sourceTree = "<group>"; };
+		14FFA2241F23029300B29295 /* INBAES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INBAES.m; sourceTree = "<group>"; };
+		14FFA2251F23029300B29295 /* INBMacroAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INBMacroAdditions.h; sourceTree = "<group>"; };
+		14FFA2261F23029300B29295 /* INBRSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INBRSA.h; sourceTree = "<group>"; };
+		14FFA2271F23029300B29295 /* INBRSA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INBRSA.m; sourceTree = "<group>"; };
+		14FFA2281F23029300B29295 /* INBTripleDES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INBTripleDES.h; sourceTree = "<group>"; };
+		14FFA2291F23029300B29295 /* INBTripleDES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INBTripleDES.m; sourceTree = "<group>"; };
+		14FFA22A1F23029300B29295 /* NSData+INB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+INB.h"; sourceTree = "<group>"; };
+		14FFA22B1F23029300B29295 /* NSData+INB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+INB.m"; sourceTree = "<group>"; };
+		14FFA22C1F23029300B29295 /* NSString+INB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+INB.h"; sourceTree = "<group>"; };
+		14FFA22D1F23029300B29295 /* NSString+INB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+INB.m"; sourceTree = "<group>"; };
+		14FFA2391F23035C00B29295 /* DaniateCert.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = DaniateCert.cer; sourceTree = "<group>"; };
+		14FFA23A1F23035C00B29295 /* DaniateCert.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = DaniateCert.p12; sourceTree = "<group>"; };
+		14FFA23B1F23035C00B29295 /* DaniateCert.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DaniateCert.pem; sourceTree = "<group>"; };
+		14FFA2401F230BA600B29295 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		14156D321B09C98B007182B2 /* Frameworks */ = {
+		14FFA2051F22FEC200B29295 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14FFA2411F230BA600B29295 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		14156D3E1B09C98B007182B2 /* Frameworks */ = {
+		14FFA2151F23026300B29295 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14156D421B09C98B007182B2 /* INBSecurityCrypto.framework in Frameworks */,
+				14FFA21D1F23026300B29295 /* INBSecurityCrypto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		14156D2C1B09C98B007182B2 = {
+		14FFA1FF1F22FEC200B29295 = {
 			isa = PBXGroup;
 			children = (
-				14156D381B09C98B007182B2 /* INBSecurityCrypto */,
-				14156D451B09C98C007182B2 /* INBSecurityCryptoTests */,
-				14156D371B09C98B007182B2 /* Products */,
+				14FFA20B1F22FEC200B29295 /* INBSecurityCrypto */,
+				14FFA2191F23026300B29295 /* INBSecurityCryptoTests */,
+				14FFA20A1F22FEC200B29295 /* Products */,
+				14FFA23F1F230BA600B29295 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
-		14156D371B09C98B007182B2 /* Products */ = {
+		14FFA20A1F22FEC200B29295 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				14156D361B09C98B007182B2 /* INBSecurityCrypto.framework */,
-				14156D411B09C98B007182B2 /* INBSecurityCryptoTests.xctest */,
+				14FFA2091F22FEC200B29295 /* INBSecurityCrypto.framework */,
+				14FFA2181F23026300B29295 /* INBSecurityCryptoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		14156D381B09C98B007182B2 /* INBSecurityCrypto */ = {
+		14FFA20B1F22FEC200B29295 /* INBSecurityCrypto */ = {
 			isa = PBXGroup;
 			children = (
-				14156D3B1B09C98B007182B2 /* INBSecurityCrypto.h */,
-				14156D5F1B09CA9E007182B2 /* NSData+INB.h */,
-				14156D601B09CA9E007182B2 /* NSData+INB.m */,
-				14156D651B09CA9E007182B2 /* NSString+INB.h */,
-				14156D661B09CA9E007182B2 /* NSString+INB.m */,
-				14156D771B09CA9E007182B2 /* INBAES.h */,
-				14156D781B09CA9E007182B2 /* INBAES.m */,
-				14156D791B09CA9E007182B2 /* INBTripleDES.h */,
-				14156D7A1B09CA9E007182B2 /* INBTripleDES.m */,
-				14156D7B1B09CA9E007182B2 /* INBRSA.h */,
-				14156D7C1B09CA9E007182B2 /* INBRSA.m */,
-				14156D851B09CA9E007182B2 /* INBMacroAdditions.h */,
-				14156D391B09C98B007182B2 /* Supporting Files */,
+				14FFA20C1F22FEC200B29295 /* INBSecurityCrypto.h */,
+				14FFA2231F23029300B29295 /* INBAES.h */,
+				14FFA2241F23029300B29295 /* INBAES.m */,
+				14FFA2251F23029300B29295 /* INBMacroAdditions.h */,
+				14FFA2261F23029300B29295 /* INBRSA.h */,
+				14FFA2271F23029300B29295 /* INBRSA.m */,
+				14FFA2281F23029300B29295 /* INBTripleDES.h */,
+				14FFA2291F23029300B29295 /* INBTripleDES.m */,
+				14FFA22A1F23029300B29295 /* NSData+INB.h */,
+				14FFA22B1F23029300B29295 /* NSData+INB.m */,
+				14FFA22C1F23029300B29295 /* NSString+INB.h */,
+				14FFA22D1F23029300B29295 /* NSString+INB.m */,
+				14FFA20D1F22FEC200B29295 /* Info.plist */,
 			);
 			path = INBSecurityCrypto;
 			sourceTree = "<group>";
 		};
-		14156D391B09C98B007182B2 /* Supporting Files */ = {
+		14FFA2191F23026300B29295 /* INBSecurityCryptoTests */ = {
 			isa = PBXGroup;
 			children = (
-				14156D3A1B09C98B007182B2 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		14156D451B09C98C007182B2 /* INBSecurityCryptoTests */ = {
-			isa = PBXGroup;
-			children = (
-				14156D571B09CA2A007182B2 /* DaniateCert.pem */,
-				14156D581B09CA2A007182B2 /* DaniateCert.cer */,
-				14156D591B09CA2A007182B2 /* DaniateCert.p12 */,
-				14156D481B09C98C007182B2 /* INBSecurityCryptoTests.m */,
-				14156D461B09C98C007182B2 /* Supporting Files */,
+				14FFA2391F23035C00B29295 /* DaniateCert.cer */,
+				14FFA23A1F23035C00B29295 /* DaniateCert.p12 */,
+				14FFA23B1F23035C00B29295 /* DaniateCert.pem */,
+				14FFA21A1F23026300B29295 /* INBSecurityCryptoTests.m */,
+				14FFA21C1F23026300B29295 /* Info.plist */,
 			);
 			path = INBSecurityCryptoTests;
 			sourceTree = "<group>";
 		};
-		14156D461B09C98C007182B2 /* Supporting Files */ = {
+		14FFA23F1F230BA600B29295 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				14156D471B09C98C007182B2 /* Info.plist */,
+				14FFA2401F230BA600B29295 /* Security.framework */,
 			);
-			name = "Supporting Files";
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		14156D331B09C98B007182B2 /* Headers */ = {
+		14FFA2061F22FEC200B29295 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14156D901B09CA9E007182B2 /* NSString+INB.h in Headers */,
-				14156DA61B09CA9E007182B2 /* INBRSA.h in Headers */,
-				14156D8A1B09CA9E007182B2 /* NSData+INB.h in Headers */,
-				14156DA41B09CA9E007182B2 /* INBTripleDES.h in Headers */,
-				14156D3C1B09C98B007182B2 /* INBSecurityCrypto.h in Headers */,
-				14156DB01B09CA9E007182B2 /* INBMacroAdditions.h in Headers */,
-				14156DA21B09CA9E007182B2 /* INBAES.h in Headers */,
+				14FFA22E1F23029300B29295 /* INBAES.h in Headers */,
+				14FFA2311F23029300B29295 /* INBRSA.h in Headers */,
+				14FFA2331F23029300B29295 /* INBTripleDES.h in Headers */,
+				14FFA2351F23029300B29295 /* NSData+INB.h in Headers */,
+				14FFA2371F23029300B29295 /* NSString+INB.h in Headers */,
+				14FFA2301F23029300B29295 /* INBMacroAdditions.h in Headers */,
+				14FFA20E1F22FEC200B29295 /* INBSecurityCrypto.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		14156D351B09C98B007182B2 /* INBSecurityCrypto */ = {
+		14FFA2081F22FEC200B29295 /* INBSecurityCrypto */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 14156D4C1B09C98C007182B2 /* Build configuration list for PBXNativeTarget "INBSecurityCrypto" */;
+			buildConfigurationList = 14FFA2111F22FEC200B29295 /* Build configuration list for PBXNativeTarget "INBSecurityCrypto" */;
 			buildPhases = (
-				14156D311B09C98B007182B2 /* Sources */,
-				14156D321B09C98B007182B2 /* Frameworks */,
-				14156D331B09C98B007182B2 /* Headers */,
-				14156D341B09C98B007182B2 /* Resources */,
+				14FFA2041F22FEC200B29295 /* Sources */,
+				14FFA2051F22FEC200B29295 /* Frameworks */,
+				14FFA2061F22FEC200B29295 /* Headers */,
+				14FFA2071F22FEC200B29295 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -193,142 +175,124 @@
 			);
 			name = INBSecurityCrypto;
 			productName = INBSecurityCrypto;
-			productReference = 14156D361B09C98B007182B2 /* INBSecurityCrypto.framework */;
+			productReference = 14FFA2091F22FEC200B29295 /* INBSecurityCrypto.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		14156D401B09C98B007182B2 /* INBSecurityCryptoTests */ = {
+		14FFA2171F23026300B29295 /* INBSecurityCryptoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 14156D4F1B09C98C007182B2 /* Build configuration list for PBXNativeTarget "INBSecurityCryptoTests" */;
+			buildConfigurationList = 14FFA2201F23026300B29295 /* Build configuration list for PBXNativeTarget "INBSecurityCryptoTests" */;
 			buildPhases = (
-				14156D3D1B09C98B007182B2 /* Sources */,
-				14156D3E1B09C98B007182B2 /* Frameworks */,
-				14156D3F1B09C98B007182B2 /* Resources */,
+				14FFA2141F23026300B29295 /* Sources */,
+				14FFA2151F23026300B29295 /* Frameworks */,
+				14FFA2161F23026300B29295 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				14156D441B09C98C007182B2 /* PBXTargetDependency */,
+				14FFA21F1F23026300B29295 /* PBXTargetDependency */,
 			);
 			name = INBSecurityCryptoTests;
 			productName = INBSecurityCryptoTests;
-			productReference = 14156D411B09C98B007182B2 /* INBSecurityCryptoTests.xctest */;
+			productReference = 14FFA2181F23026300B29295 /* INBSecurityCryptoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		14156D2D1B09C98B007182B2 /* Project object */ = {
+		14FFA2001F22FEC200B29295 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = Daniate;
 				TargetAttributes = {
-					14156D351B09C98B007182B2 = {
-						CreatedOnToolsVersion = 6.3;
+					14FFA2081F22FEC200B29295 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = TUMV96N6ER;
+						ProvisioningStyle = Automatic;
 					};
-					14156D401B09C98B007182B2 = {
-						CreatedOnToolsVersion = 6.3;
-					};
-					14156D521B09C9D6007182B2 = {
-						CreatedOnToolsVersion = 6.3;
+					14FFA2171F23026300B29295 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = TUMV96N6ER;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = 14156D301B09C98B007182B2 /* Build configuration list for PBXProject "INBSecurityCrypto" */;
+			buildConfigurationList = 14FFA2031F22FEC200B29295 /* Build configuration list for PBXProject "INBSecurityCrypto" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 14156D2C1B09C98B007182B2;
-			productRefGroup = 14156D371B09C98B007182B2 /* Products */;
+			mainGroup = 14FFA1FF1F22FEC200B29295;
+			productRefGroup = 14FFA20A1F22FEC200B29295 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				14156D351B09C98B007182B2 /* INBSecurityCrypto */,
-				14156D401B09C98B007182B2 /* INBSecurityCryptoTests */,
-				14156D521B09C9D6007182B2 /* INBSecurityCryptoAggregate */,
+				14FFA2081F22FEC200B29295 /* INBSecurityCrypto */,
+				14FFA2171F23026300B29295 /* INBSecurityCryptoTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		14156D341B09C98B007182B2 /* Resources */ = {
+		14FFA2071F22FEC200B29295 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		14156D3F1B09C98B007182B2 /* Resources */ = {
+		14FFA2161F23026300B29295 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14156D5C1B09CA2A007182B2 /* DaniateCert.p12 in Resources */,
-				14156D5A1B09CA2A007182B2 /* DaniateCert.pem in Resources */,
-				14156D5B1B09CA2A007182B2 /* DaniateCert.cer in Resources */,
+				14FFA23E1F23035C00B29295 /* DaniateCert.pem in Resources */,
+				14FFA23D1F23035C00B29295 /* DaniateCert.p12 in Resources */,
+				14FFA23C1F23035C00B29295 /* DaniateCert.cer in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		14156D561B09CA09007182B2 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "sh ./BuildFramework.sh";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		14156D311B09C98B007182B2 /* Sources */ = {
+		14FFA2041F22FEC200B29295 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14156DA71B09CA9E007182B2 /* INBRSA.m in Sources */,
-				14156D8B1B09CA9E007182B2 /* NSData+INB.m in Sources */,
-				14156DA51B09CA9E007182B2 /* INBTripleDES.m in Sources */,
-				14156D911B09CA9E007182B2 /* NSString+INB.m in Sources */,
-				14156DA31B09CA9E007182B2 /* INBAES.m in Sources */,
+				14FFA2321F23029300B29295 /* INBRSA.m in Sources */,
+				14FFA2341F23029300B29295 /* INBTripleDES.m in Sources */,
+				14FFA2381F23029300B29295 /* NSString+INB.m in Sources */,
+				14FFA2361F23029300B29295 /* NSData+INB.m in Sources */,
+				14FFA22F1F23029300B29295 /* INBAES.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		14156D3D1B09C98B007182B2 /* Sources */ = {
+		14FFA2141F23026300B29295 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14156D491B09C98C007182B2 /* INBSecurityCryptoTests.m in Sources */,
+				14FFA21B1F23026300B29295 /* INBSecurityCryptoTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		14156D441B09C98C007182B2 /* PBXTargetDependency */ = {
+		14FFA21F1F23026300B29295 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 14156D351B09C98B007182B2 /* INBSecurityCrypto */;
-			targetProxy = 14156D431B09C98C007182B2 /* PBXContainerItemProxy */;
+			target = 14FFA2081F22FEC200B29295 /* INBSecurityCrypto */;
+			targetProxy = 14FFA21E1F23026300B29295 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		14156D4A1B09C98C007182B2 /* Debug */ = {
+		14FFA20F1F22FEC200B29295 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					"$(ARCHS_STANDARD)",
-					armv7s,
-				);
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -336,17 +300,21 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -355,14 +323,13 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -372,14 +339,12 @@
 			};
 			name = Debug;
 		};
-		14156D4B1B09C98C007182B2 /* Release */ = {
+		14FFA2101F22FEC200B29295 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					"$(ARCHS_STANDARD)",
-					armv7s,
-				);
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -387,10 +352,13 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -407,7 +375,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -417,94 +385,66 @@
 			};
 			name = Release;
 		};
-		14156D4D1B09C98C007182B2 /* Debug */ = {
+		14FFA2121F22FEC200B29295 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = TUMV96N6ER;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = INBSecurityCrypto/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
+				PRODUCT_BUNDLE_IDENTIFIER = com.daniate.INBSecurityCrypto;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
-		14156D4E1B09C98C007182B2 /* Release */ = {
+		14FFA2131F22FEC200B29295 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = TUMV96N6ER;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = INBSecurityCrypto/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
+				PRODUCT_BUNDLE_IDENTIFIER = com.daniate.INBSecurityCrypto;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
-		14156D501B09C98C007182B2 /* Debug */ = {
+		14FFA2211F23026300B29295 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
+				DEVELOPMENT_TEAM = TUMV96N6ER;
 				INFOPLIST_FILE = INBSecurityCryptoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					XCTest,
-					"-ObjC",
-				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.daniate.INBSecurityCryptoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		14156D511B09C98C007182B2 /* Release */ = {
+		14FFA2221F23026300B29295 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				DEVELOPMENT_TEAM = TUMV96N6ER;
 				INFOPLIST_FILE = INBSecurityCryptoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					XCTest,
-					"-ObjC",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		14156D541B09C9D6007182B2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		14156D551B09C9D6007182B2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = com.daniate.INBSecurityCryptoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -512,43 +452,32 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		14156D301B09C98B007182B2 /* Build configuration list for PBXProject "INBSecurityCrypto" */ = {
+		14FFA2031F22FEC200B29295 /* Build configuration list for PBXProject "INBSecurityCrypto" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				14156D4A1B09C98C007182B2 /* Debug */,
-				14156D4B1B09C98C007182B2 /* Release */,
+				14FFA20F1F22FEC200B29295 /* Debug */,
+				14FFA2101F22FEC200B29295 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		14156D4C1B09C98C007182B2 /* Build configuration list for PBXNativeTarget "INBSecurityCrypto" */ = {
+		14FFA2111F22FEC200B29295 /* Build configuration list for PBXNativeTarget "INBSecurityCrypto" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				14156D4D1B09C98C007182B2 /* Debug */,
-				14156D4E1B09C98C007182B2 /* Release */,
+				14FFA2121F22FEC200B29295 /* Debug */,
+				14FFA2131F22FEC200B29295 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
-		14156D4F1B09C98C007182B2 /* Build configuration list for PBXNativeTarget "INBSecurityCryptoTests" */ = {
+		14FFA2201F23026300B29295 /* Build configuration list for PBXNativeTarget "INBSecurityCryptoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				14156D501B09C98C007182B2 /* Debug */,
-				14156D511B09C98C007182B2 /* Release */,
+				14FFA2211F23026300B29295 /* Debug */,
+				14FFA2221F23026300B29295 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		14156D531B09C9D6007182B2 /* Build configuration list for PBXAggregateTarget "INBSecurityCryptoAggregate" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				14156D541B09C9D6007182B2 /* Debug */,
-				14156D551B09C9D6007182B2 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 14156D2D1B09C98B007182B2 /* Project object */;
+	rootObject = 14FFA2001F22FEC200B29295 /* Project object */;
 }

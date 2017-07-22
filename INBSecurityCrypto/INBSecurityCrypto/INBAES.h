@@ -12,9 +12,9 @@
  *  AES加解密。使用CBC及PKCS7Padding。
  */
 @interface INBAES : NSObject
-@property (nonatomic, copy, readonly) NSData *key;
-@property (nonatomic, copy, readonly) NSData *iv;
-+ (instancetype)sharedINBAES;
+@property (nonatomic, copy, readonly, nullable) NSData *key;
+@property (nonatomic, copy, readonly, nullable) NSData *iv;
++ (nonnull instancetype)sharedINBAES;
 /**
  *  更新密钥。
  *
@@ -36,7 +36,7 @@
  *
  *  @return 加密后的数据（密文数据）
  */
-- (NSData *)AES128Encrypt:(NSData *)plainData;
+- (NSData * _Nullable)AES128Encrypt:(NSData * _Nonnull)plainData;
 /**
  *  AES-128 解密
  *
@@ -44,7 +44,7 @@
  *
  *  @return 解密后的数据（明文数据）
  */
-- (NSData *)AES128Decrypt:(NSData *)cipherData;
+- (NSData * _Nullable)AES128Decrypt:(NSData * _Nonnull)cipherData;
 /**
  *  AES-192 加密
  *
@@ -52,7 +52,7 @@
  *
  *  @return 加密后的数据（密文数据）
  */
-- (NSData *)AES192Encrypt:(NSData *)plainData;
+- (NSData * _Nullable)AES192Encrypt:(NSData * _Nonnull)plainData;
 /**
  *  AES-192 解密
  *
@@ -60,7 +60,7 @@
  *
  *  @return 解密后的数据（明文数据）
  */
-- (NSData *)AES192Decrypt:(NSData *)cipherData;
+- (NSData * _Nullable)AES192Decrypt:(NSData * _Nonnull)cipherData;
 /**
  *  AES-256 加密
  *
@@ -68,7 +68,7 @@
  *
  *  @return 加密后的数据（密文数据）
  */
-- (NSData *)AES256Encrypt:(NSData *)plainData;
+- (NSData * _Nullable)AES256Encrypt:(NSData * _Nonnull)plainData;
 /**
  *  AES-256 解密
  *
@@ -76,7 +76,7 @@
  *
  *  @return 解密后的数据（明文数据）
  */
-- (NSData *)AES256Decrypt:(NSData *)cipherData;
+- (NSData * _Nullable)AES256Decrypt:(NSData * _Nonnull)cipherData;
 /**
  *  加解密。当需要使用指定的密钥或初始化向量时，可以使用该方法。会修改_key、_iv。
  *
@@ -87,8 +87,8 @@
  *
  *  @return 加密/解密后的数据
  */
-- (NSData *)doCipher:(NSData *)data
-				 key:(NSData *)key
-				  iv:(NSData *)iv
+- (NSData * _Nullable)doCipher:(NSData * _Nonnull)data
+				 key:(NSData * _Nonnull)key
+				  iv:(NSData * _Nullable)iv
 		   operation:(CCOperation)operation;
 @end

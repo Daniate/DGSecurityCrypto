@@ -17,13 +17,13 @@
  *
  *  @return Base-64编码字符串（无换行，URL Unsafe）
  */
-- (NSString *)base64EncodedString;
+- (NSString * _Nullable)dg_base64EncodedString;
 /**
  *  对自身进行Base-64编码
  *
  *  @return Base-64编码数据（无换行，URL Unsafe）
  */
-- (NSData *)base64EncodedData;
+- (NSData * _Nullable)dg_base64EncodedData;
 /**
  *  对Base-64字符串进行解码
  *
@@ -31,7 +31,7 @@
  *
  *  @return 解码后的数据
  */
-+ (NSData *)base64DecodedDataWithString:(NSString *)base64String;
++ (NSData * _Nullable)dg_base64DecodedDataWithString:(NSString * _Nullable)base64String;
 /**
  *  对Base-64数据进行解码
  *
@@ -39,13 +39,13 @@
  *
  *  @return 解码后的数据
  */
-+ (NSData *)base64DecodedDataWithData:(NSData *)base64Data;
++ (NSData * _Nullable)dg_base64DecodedDataWithData:(NSData * _Nullable)base64Data;
 /**
  *  对自身（Base-64数据）进行Base-64解码
  *
  *  @return 解码后的数据
  */
-- (NSData *)base64DecodedData;
+- (NSData * _Nullable)dg_base64DecodedData;
 @end
 
 /**
@@ -57,49 +57,49 @@
  *
  *  @return md2
  */
-- (NSData *)MD2;
+- (NSData * _Nullable)dg_MD2;
 /**
  *  Message Digest 4
  *
  *  @return md4
  */
-- (NSData *)MD4;
+- (NSData * _Nullable)dg_MD4;
 /**
  *  Message Digest 5
  *
  *  @return md5
  */
-- (NSData *)MD5;
+- (NSData * _Nullable)dg_MD5;
 /**
  *  Secure Hash Algorithm 1
  *
  *  @return sha1
  */
-- (NSData *)SHA1;
+- (NSData * _Nullable)dg_SHA1;
 /**
  *  Secure Hash Algorithm 224
  *
  *  @return sha224
  */
-- (NSData *)SHA224;
+- (NSData * _Nullable)dg_SHA224;
 /**
  *  Secure Hash Algorithm 256
  *
  *  @return sha256
  */
-- (NSData *)SHA256;
+- (NSData * _Nullable)dg_SHA256;
 /**
  *  Secure Hash Algorithm 384
  *
  *  @return sha384
  */
-- (NSData *)SHA384;
+- (NSData * _Nullable)dg_SHA384;
 /**
  *  Secure Hash Algorithm 512
  *
  *  @return sha512
  */
-- (NSData *)SHA512;
+- (NSData * _Nullable)dg_SHA512;
 @end
 /**
  *  对数据进行十六进制编解码，使用小写字母
@@ -110,20 +110,72 @@
  *
  *  @return NSData（bytes中的每个字符都是十六进制字符）
  */
-- (NSData *)encodeToHexData;
+- (NSData * _Nullable)dg_encodeToHexData;
 /**
  *  对调用`- (NSData *)encodeToHexData`得到的数据进行还原
  *
  *  @return 还原后的NSData
  */
-- (NSData *)decodeFromHexData;
+- (NSData * _Nullable)dg_decodeFromHexData;
 /**
  *  获取NSData对应的十六进制字符串。例如：[[data MD5] encodeHexString]
  *
  *  @return 十六进制字符串
  */
-- (NSString *)encodeToHexString;
+- (NSString * _Nullable)dg_encodeToHexString;
 @end
+
+@interface NSData (INBMDSHAHexString)
+/**
+ *  Message Digest 2 hex string
+ *
+ *  @return md2 hex string
+ */
+- (NSString * _Nullable)dg_MD2HexString;
+/**
+ *  Message Digest 4 hex string
+ *
+ *  @return md4 hex string
+ */
+- (NSString * _Nullable)dg_MD4HexString;
+/**
+ *  Message Digest 5 hex string
+ *
+ *  @return md5 hex string
+ */
+- (NSString * _Nullable)dg_MD5HexString;
+/**
+ *  Secure Hash Algorithm 1 hex string
+ *
+ *  @return sha1 hex string
+ */
+- (NSString * _Nullable)dg_SHA1HexString;
+/**
+ *  Secure Hash Algorithm 224 hex string
+ *
+ *  @return sha224 hex string
+ */
+- (NSString * _Nullable)dg_SHA224HexString;
+/**
+ *  Secure Hash Algorithm 256 hex string
+ *
+ *  @return sha256 hex string
+ */
+- (NSString * _Nullable)dg_SHA256HexString;
+/**
+ *  Secure Hash Algorithm 384 hex string
+ *
+ *  @return sha384 hex string
+ */
+- (NSString * _Nullable)dg_SHA384HexString;
+/**
+ *  Secure Hash Algorithm 512 hex string
+ *
+ *  @return sha512 hex string
+ */
+- (NSString * _Nullable)dg_SHA512HexString;
+@end
+
 /**
  *  密码学安全伪随机数生成器
  */
@@ -135,7 +187,7 @@
  *
  *  @return 安全随机数据
  */
-+ (NSData *)generateSecureRandomData:(size_t)length;
++ (NSData * _Nullable)dg_generateSecureRandomData:(size_t)length;
 @end
 /**
  *  哈希消息验证码
@@ -151,7 +203,7 @@
  *
  *  @return 密钥
  */
-+ (NSData *)generateHmacKeyForAlgorithm:(CCHmacAlgorithm)algorithm;
++ (NSData * _Nullable)dg_generateHmacKeyForAlgorithm:(CCHmacAlgorithm)algorithm;
 /**
  *  哈希消息验证码
  *
@@ -160,7 +212,7 @@
  *
  *  @return 哈希消息验证码。返回的数据未经任何处理（如，base64、hex）。
  */
-- (NSData *)HmacWithAlgorithm:(CCHmacAlgorithm)algorithm key:(NSData *)key;
+- (NSData * _Nullable)dg_HmacWithAlgorithm:(CCHmacAlgorithm)algorithm key:(NSData * _Nonnull)key;
 @end
 /**
  *  对称密钥生成器
@@ -180,7 +232,7 @@
  *
  *  @return 密钥
  */
-+ (NSData *)generateSymmetricKeyForAlgorithm:(CCAlgorithm)algorithm;
++ (NSData * _Nullable)dg_generateSymmetricKeyForAlgorithm:(CCAlgorithm)algorithm;
 /**
  *  为指定的加密算法生成对称密钥。<br/>
  *  如果指定的密钥大小不正确，会自动进行处理：<br/>
@@ -199,8 +251,7 @@
  *
  *  @return 密钥
  */
-+ (NSData *)generateSymmetricKeyForAlgorithm:(CCAlgorithm)algorithm
-									 keySize:(unsigned int)keySize;
++ (NSData * _Nullable)dg_generateSymmetricKeyForAlgorithm:(CCAlgorithm)algorithm keySize:(unsigned int)keySize;
 @end
 /**
  *  初始化向量生成器
@@ -213,7 +264,7 @@
  *
  *  @return 初始化向量
  */
-+ (NSData *)generateIVForAlgorithm:(CCAlgorithm)algorithm;
++ (NSData * _Nullable)dg_generateIVForAlgorithm:(CCAlgorithm)algorithm;
 @end
 /**
  *  分组对称加解密（不是流加解密）
@@ -230,11 +281,11 @@
  *
  *  @return 加密/解密后的数据
  */
-- (NSData *)doBlockCipherWithAlgorithm:(CCAlgorithm)algorithm
-								   key:(NSData *)key
-									iv:(NSData *)iv
-							 operation:(CCOperation)operation
-						isPKCS7Padding:(BOOL)isPKCS7Padding;
+- (NSData * _Nullable)dg_doBlockCipherWithAlgorithm:(CCAlgorithm)algorithm
+                                                key:(NSData * _Nonnull)key
+                                                 iv:(NSData * _Nullable)iv
+                                          operation:(CCOperation)operation
+                                     isPKCS7Padding:(BOOL)isPKCS7Padding;
 /**
  *  使用分组对称加密算法对数据进行加解密。
  *
@@ -244,7 +295,7 @@
  *  当使用ECB模式时或使用的是流加密算法时，初始化向量会被忽略掉。
  *
  *  @param algorithm      算法，不能是流加密算法
- *  @param key            密钥
+ *  @param key            密钥。其长度必须与算法相匹配
  *  @param iv             初始化向量，可以为空。
  *  @param operation      加密/解密操作
  *  @param isPKCS7Padding 是否使用PKCS7Padding填充模式，如不使用，则是使用NoPadding填充模式
@@ -252,11 +303,11 @@
  *
  *  @return 加密/解密后的数据
  */
-- (NSData *)doBlockCipherWithAlgorithm:(CCAlgorithm)algorithm
-								   key:(NSData *)key
-									iv:(NSData *)iv
-							 operation:(CCOperation)operation
-						isPKCS7Padding:(BOOL)isPKCS7Padding
-								 isECB:(BOOL)isECB;
+- (NSData * _Nullable)dg_doBlockCipherWithAlgorithm:(CCAlgorithm)algorithm
+                                                key:(NSData * _Nonnull)key
+                                                 iv:(NSData * _Nullable)iv
+                                          operation:(CCOperation)operation
+                                     isPKCS7Padding:(BOOL)isPKCS7Padding
+                                              isECB:(BOOL)isECB;
 @end
 
