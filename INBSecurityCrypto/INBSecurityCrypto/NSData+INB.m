@@ -116,7 +116,7 @@ static const char *__dg_sc_digitsHex = "0123456789abcdef";
     size_t bufSize = (len << 1) * sizeof(unsigned char);
     unsigned char *buf = malloc(bufSize);
     if (buf == NULL) {
-        NSLog(@"%s (Cannot malloc memory.)", __PRETTY_FUNCTION__);
+        NSLog(@"%s (Cannot alloc memory.)", __PRETTY_FUNCTION__);
         return nil;
     }
     memset(buf, '\0', bufSize);
@@ -162,7 +162,7 @@ static int dg_numberFromHex(unsigned char hex) {
     NSUInteger bufSize = (len >> 1) * sizeof(unsigned char);
     unsigned char *buf = malloc(bufSize);
     if (buf == NULL) {
-        NSLog(@"%s (Cannot malloc memory.)", __PRETTY_FUNCTION__);
+        NSLog(@"%s (Cannot alloc memory.)", __PRETTY_FUNCTION__);
         return nil;
     }
     memset(buf, '\0', bufSize);
@@ -231,7 +231,7 @@ static int dg_numberFromHex(unsigned char hex) {
     }
 	void *buf = malloc(length);
     if (buf == NULL) {
-        NSLog(@"%s (Cannot malloc memory.)", __PRETTY_FUNCTION__);
+        NSLog(@"%s (Cannot alloc memory.)", __PRETTY_FUNCTION__);
         return nil;
     }
     NSData *randomData = nil;
@@ -583,7 +583,7 @@ NSUInteger __dg_sc_extraPaddingLength = 0;
     }
     void *buf = malloc(bufSize);
     if (buf == NULL) {
-        NSLog(@"%s (Cannot malloc memory.)", __PRETTY_FUNCTION__);
+        NSLog(@"%s (Cannot alloc memory.)", __PRETTY_FUNCTION__);
         return nil;
     }
     memset(buf, '\0', bufSize);

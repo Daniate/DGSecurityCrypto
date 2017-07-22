@@ -262,6 +262,10 @@ static INBRSA *sharedINBRSA = nil;
 	// 分配内存块，用于存放加密/解密后的数据段
 	size_t bufSize = SecKeyGetBlockSize(key);
 	uint8_t *buf = malloc(bufSize * sizeof(uint8_t));
+    if (buf == NULL) {
+        NSLog(@"%s (Cannot alloc memory.)", __PRETTY_FUNCTION__);
+        return nil;
+    }
 	// 计算数据段最大长度及数据段的个数
 	double totalLength = data.length;
 	size_t blockSize = bufSize;
@@ -275,6 +279,7 @@ static INBRSA *sharedINBRSA = nil;
 	}
 	size_t blockCount = (size_t)ceil(totalLength / blockSize);
 	NSMutableData *outData = [NSMutableData data];
+    BOOL interrupt = NO;
 	// 分段加密/解密
 	for (int i = 0; i < blockCount; i++) {
 		NSUInteger loc = i * blockSize;
@@ -302,18 +307,15 @@ static INBRSA *sharedINBRSA = nil;
 			[outData appendData:[NSData dataWithBytes:(const void *)buf
 											   length:bufSize]];
 		} else {
-			if (buf) {
-				free(buf);
-				buf = NULL;
-			}
-			return nil;
+            interrupt = YES;
+            break;
 		}
 	}
 	if (buf) {
 		free(buf);
 		buf = NULL;
 	}
-	return outData;
+	return interrupt ? nil : outData;
 }
 
 - (NSData * _Nullable)signDataWithPrivateKey:(NSData * _Nonnull)data {
@@ -357,25 +359,30 @@ static INBRSA *sharedINBRSA = nil;
 			break;
 		}
 		default:
-			break;
+        {
+            NSLog(@"%s (Unsupported padding mode.)", __PRETTY_FUNCTION__);
+            return nil;
+        }
 	}
-	const uint8_t *dataToSign = digest.bytes;
-	size_t dataToSignLen = digest.length;
 	// 分配内存块，用于存放签名后的数据
 	size_t sigLen = SecKeyGetBlockSize(self.privateKey);
 	uint8_t *sig = malloc(sigLen * sizeof(uint8_t));
+    if (sig == NULL) {
+        NSLog(@"%s (Cannot alloc memory.)", __PRETTY_FUNCTION__);
+        return nil;
+    }
 	NSData *outData = nil;
-	if (sig) {
-		memset(sig, 0x0, sigLen);
-		// 对消息摘要进行签名
-		OSStatus status = SecKeyRawSign(self.privateKey, self.padding, dataToSign, dataToSignLen, sig, &sigLen);
-		if (status == errSecSuccess) {
-			outData = [NSData dataWithBytes:(const void *)sig
-									 length:sigLen];
-		}
-		free(sig);
-		sig = NULL;
-	}
+    memset(sig, '\0', sigLen);
+    const uint8_t *dataToSign = digest.bytes;
+    size_t dataToSignLen = digest.length;
+    // 对消息摘要进行签名
+    OSStatus status = SecKeyRawSign(self.privateKey, self.padding, dataToSign, dataToSignLen, sig, &sigLen);
+    if (status == errSecSuccess) {
+        outData = [NSData dataWithBytes:(const void *)sig
+                                 length:sigLen];
+    }
+    free(sig);
+    sig = NULL;
 	return outData;
 }
 
@@ -420,7 +427,10 @@ static INBRSA *sharedINBRSA = nil;
 			break;
 		}
 		default:
-			break;
+        {
+            NSLog(@"%s (Unsupported padding mode.)", __PRETTY_FUNCTION__);
+            return NO;
+        }
 	}
 	const uint8_t *signedData = digest.bytes;
 	size_t signedDataLen = digest.length;
