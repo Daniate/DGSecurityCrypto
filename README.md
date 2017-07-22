@@ -18,7 +18,7 @@ If an error occurs：`Include of non-modular header inside framework module ***`
 
 ![image](./images/INBSecurityCrypto_error.png)
 
-Yous can set `Allow Non-modular Includes In Framework Modules` to `YES` (In `TARGETS -> Build Settings -> Language - Modules`)
+You can set `Allow Non-modular Includes In Framework Modules` to `YES` (In `TARGETS -> Build Settings -> Language - Modules`)
 
 ![image](./images/INBSecurityCrypto_Allow_Non-modular.png)
 
