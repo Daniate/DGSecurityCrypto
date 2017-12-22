@@ -8,7 +8,7 @@
 
 ![image](./images/INBSecurityCrypto_Test.png)
 
-### Using
+### Usage
 
 For iOS 8 and later, you can use dynamic framework. (The deployment target `greater than or equal to 8.0.0`.)
 
