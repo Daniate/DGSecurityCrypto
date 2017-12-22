@@ -328,6 +328,9 @@ static int dg_numberFromHex(unsigned char hex) {
 + (NSData *)dg_generateSymmetricKeyForAlgorithm:(CCAlgorithm)algorithm {
 	unsigned int keySize = 0;
 	switch (algorithm) {
+        case kCCAlgorithmAES:
+            keySize = kCCKeySizeAES256;
+            break;
 		case kCCAlgorithmDES:
 			keySize = kCCKeySizeDES;
 			break;
@@ -346,7 +349,7 @@ static int dg_numberFromHex(unsigned char hex) {
 		case kCCAlgorithmBlowfish:
 			keySize = kCCKeySizeMaxBlowfish;
 			break;
-		default:// kCCAlgorithmAES128 / kCCAlgorithmAES
+		default:
             NSLog(@"%s (The algorithm is invalid. Assume kCCAlgorithmAES128/kCCAlgorithmAES.)", __PRETTY_FUNCTION__);
 			keySize = kCCKeySizeAES256;
 			break;
@@ -386,6 +389,15 @@ static int dg_numberFromHex(unsigned char hex) {
 + (NSData * _Nullable)dg_generateSymmetricKeyForAlgorithm:(CCAlgorithm)algorithm
                                                   keySize:(unsigned int)keySize {
 	switch (algorithm) {
+        case kCCAlgorithmAES:
+            if (keySize <= kCCKeySizeAES128) {
+                keySize = kCCKeySizeAES128;
+            } else if (keySize <= kCCKeySizeAES192) {
+                keySize = kCCKeySizeAES192;
+            } else {
+                keySize = kCCKeySizeAES256;
+            }
+            break;
 		case kCCAlgorithmDES:
 			keySize = kCCKeySizeDES;
 			break;
@@ -420,7 +432,7 @@ static int dg_numberFromHex(unsigned char hex) {
 				keySize = kCCKeySizeMaxBlowfish;
 			}
 			break;
-		default:// kCCAlgorithmAES128 / kCCAlgorithmAES
+		default:
             NSLog(@"%s (The algorithm is invalid. Assume kCCAlgorithmAES128/kCCAlgorithmAES.)", __PRETTY_FUNCTION__);
 			if (keySize <= kCCKeySizeAES128) {
 				keySize = kCCKeySizeAES128;
@@ -439,6 +451,9 @@ static int dg_numberFromHex(unsigned char hex) {
 + (NSData * _Nullable)dg_generateIVForAlgorithm:(CCAlgorithm)algorithm {
 	size_t ivSize = 0;
 	switch (algorithm) {
+        case kCCAlgorithmAES:
+            ivSize = kCCBlockSizeAES128;
+            break;
 		case kCCAlgorithmDES:
 			ivSize = kCCBlockSizeDES;
 			break;
@@ -454,7 +469,7 @@ static int dg_numberFromHex(unsigned char hex) {
 		case kCCAlgorithmBlowfish:
 			ivSize = kCCBlockSizeBlowfish;
 			break;
-		default:// kCCAlgorithmAES128 / kCCAlgorithmAES
+		default:
             NSLog(@"%s (The algorithm is invalid. Assume kCCAlgorithmAES128/kCCAlgorithmAES.)", __PRETTY_FUNCTION__);
 			ivSize = kCCBlockSizeAES128;
 			break;
@@ -518,6 +533,12 @@ NSUInteger __dg_sc_extraPaddingLength = 0;
 	NSParameterAssert(operation == kCCEncrypt ||
                       operation == kCCDecrypt);
 	switch (algorithm) {
+        case kCCAlgorithmAES:
+            NSParameterAssert(key.length == kCCKeySizeAES128 ||
+                              key.length == kCCKeySizeAES192 ||
+                              key.length == kCCKeySizeAES256);
+            NSParameterAssert(iv == nil || iv.length == kCCBlockSizeAES128);
+            break;
 		case kCCAlgorithmDES:
 			NSParameterAssert(key.length == kCCKeySizeDES);
 			NSParameterAssert(iv == nil || iv.length == kCCBlockSizeDES);
@@ -551,6 +572,9 @@ NSUInteger __dg_sc_extraPaddingLength = 0;
 	}
     size_t blockSize = 0;
     switch (algorithm) {
+        case kCCAlgorithmAES:
+            blockSize = kCCBlockSizeAES128;
+            break;
         case kCCAlgorithmDES:
             blockSize = kCCBlockSizeDES;
             break;
