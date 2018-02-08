@@ -1,6 +1,6 @@
 //
-//  NSData+INB.h
-//  INBSecurityCrypto
+//  NSData+DGSecurityCrypto.h
+//  DGSecurityCrypto
 //
 //  Created by Daniate on 15/3/12.
 //  Copyright (c) 2015年 Daniate. All rights reserved.
@@ -11,7 +11,7 @@
 /**
  *  Base-64
  */
-@interface NSData (INBBase64)
+@interface NSData (DGBase64)
 /**
  *  对自身进行Base-64编码
  *
@@ -51,7 +51,7 @@
 /**
  *  消息摘要与安全哈希。返回的数据未经任何处理（如，Base-64、hex）。
  */
-@interface NSData (INBMessageDigest)
+@interface NSData (DGMessageDigest)
 /**
  *  Message Digest 2
  *
@@ -104,7 +104,7 @@
 /**
  *  对数据进行十六进制编解码，使用小写字母
  */
-@interface NSData (INBHex)
+@interface NSData (DGHex)
 /**
  *  将原始数据中的每个字节，转换为两个十六进制字符，并将它们放入到指定的缓冲区中，最后通过缓冲区构建NSData。
  *
@@ -125,7 +125,7 @@
 - (NSString * _Nullable)dg_encodeToHexString;
 @end
 
-@interface NSData (INBMDSHAHexString)
+@interface NSData (DGMDSHAHexString)
 /**
  *  Message Digest 2 hex string
  *
@@ -179,7 +179,7 @@
 /**
  *  密码学安全伪随机数生成器
  */
-@interface NSData (INBCryptoPRNG)
+@interface NSData (DGCryptoPRNG)
 /**
  *  生成安全随机数据，可用于生成密钥、初始化向量等等。
  *
@@ -192,7 +192,7 @@
 /**
  *  哈希消息验证码
  */
-@interface NSData (INBHmac)
+@interface NSData (DGHmac)
 /**
  *  为指定的Hmac算法生成密钥。
  *  Hmac所建议的密钥长度至少为与该Hmac算法相关的哈希函数生成的哈希值的长度。
@@ -217,7 +217,7 @@
 /**
  *  对称密钥生成器
  */
-@interface NSData (INBSymmetricKeyGenerator)
+@interface NSData (DGSymmetricKeyGenerator)
 /**
  *  为指定的加密算法生成对称密钥。使用的密钥长度如下：<br/>
  *  kCCAlgorithmAES      -> kCCKeySizeAES256<br/>
@@ -256,7 +256,7 @@
 /**
  *  初始化向量生成器
  */
-@interface NSData (INBIVGenerator)
+@interface NSData (DGIVGenerator)
 /**
  *  为指定的加密算法生成初始化向量，初始化向量的大小与算法分组的大小相同。
  *
@@ -269,7 +269,7 @@
 /**
  *  分组对称加解密（不是流加解密）
  */
-@interface NSData (INBSymmetricEncryptionDecryption)
+@interface NSData (DGSymmetricEncryptionDecryption)
 /**
  *  使用分组对称加密算法对数据进行加解密，使用CBC。
  *

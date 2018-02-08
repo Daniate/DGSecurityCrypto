@@ -1,37 +1,37 @@
 //
-//  INBRSA.m
-//  INBSecurityCrypto
+//  DGRSA.m
+//  DGSecurityCrypto
 //
 //  Created by Daniate on 15/3/12.
 //  Copyright (c) 2015年 Daniate. All rights reserved.
 //
 
-#import "INBRSA.h"
-#import "NSData+INB.h"
+#import "DGRSA.h"
+#import "NSData+DGSecurityCrypto.h"
 
-NSUInteger const INBRSAKeySizeInBits2048 = 1 << 11;
-NSUInteger const INBRSAKeySizeInBits1024 = 1 << 10;
+NSUInteger const DGRSAKeySizeInBits2048 = 1 << 11;
+NSUInteger const DGRSAKeySizeInBits1024 = 1 << 10;
 
-@interface INBRSA () {
+@interface DGRSA () {
 	SecKeyRef _privateKey;
 	SecKeyRef _publicKey;
 }
 
 @end
 
-@implementation INBRSA
-static INBRSA *sharedINBRSA = nil;
-+ (nonnull instancetype)sharedINBRSA {
+@implementation DGRSA
+static DGRSA *sharedDGRSA = nil;
++ (nonnull instancetype)sharedDGRSA {
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		sharedINBRSA = [[super allocWithZone:NULL] init];
-		sharedINBRSA.padding = kSecPaddingPKCS1SHA1;
-		[sharedINBRSA generateKeys];
+		sharedDGRSA = [[super allocWithZone:NULL] init];
+		sharedDGRSA.padding = kSecPaddingPKCS1SHA1;
+		[sharedDGRSA generateKeys];
 	});
-	return sharedINBRSA;
+	return sharedDGRSA;
 }
 + (id)allocWithZone:(struct _NSZone *)zone {
-	return [INBRSA sharedINBRSA];
+	return [DGRSA sharedDGRSA];
 }
 
 - (void)setPadding:(SecPadding)padding {
@@ -48,11 +48,11 @@ static INBRSA *sharedINBRSA = nil;
 }
 
 - (BOOL)generateKeys {
-	return [self generateKeys:INBRSAKeySizeInBits2048];
+	return [self generateKeys:DGRSAKeySizeInBits2048];
 }
 
 - (BOOL)generateKeys:(NSUInteger)keySizeInBits {
-	NSParameterAssert(keySizeInBits == INBRSAKeySizeInBits2048 || keySizeInBits == INBRSAKeySizeInBits1024);
+	NSParameterAssert(keySizeInBits == DGRSAKeySizeInBits2048 || keySizeInBits == DGRSAKeySizeInBits1024);
 	// 即便设置了公钥解密、私钥加密，但测试的结果是返回-4（errSecUnimplemented），推测：iOS未实现公钥解密、私钥加密
 //	NSDictionary *privateKeyAttrs = @{
 //									  (__bridge __strong id)kSecAttrCanEncrypt: (__bridge __strong id)kCFBooleanTrue,

@@ -1,21 +1,21 @@
 //
-//  NSData+INB.m
-//  INBSecurityCrypto
+//  NSData+DGSecurityCrypto.m
+//  DGSecurityCrypto
 //
 //  Created by Daniate on 15/3/12.
 //  Copyright (c) 2015年 Daniate. All rights reserved.
 //
 
-#import "NSData+INB.h"
-#import "INBMacroAdditions.h"
+#import "NSData+DGSecurityCrypto.h"
+#import "DGMacroAdditions.h"
 #ifdef __IPHONE_8_0
 #import <CommonCrypto/CommonRandom.h>
 #endif
 
-@implementation NSData (INBBase64)
+@implementation NSData (DGBase64)
 - (NSString * _Nullable)dg_base64EncodedString {
 #ifdef __IPHONE_7_0
-	if (INBIOS7_0_0OrLater) {
+	if (DGIOS7_0_0OrLater) {
 		return [self base64EncodedStringWithOptions:0];
 	} else {
 #endif
@@ -26,7 +26,7 @@
 }
 - (NSData * _Nullable)dg_base64EncodedData {
 #ifdef __IPHONE_7_0
-	if (INBIOS7_0_0OrLater) {
+	if (DGIOS7_0_0OrLater) {
 		return [self base64EncodedDataWithOptions:0];
 	} else {
 #endif
@@ -37,7 +37,7 @@
 }
 + (NSData * _Nullable)dg_base64DecodedDataWithString:(NSString *)base64String {
 #ifdef __IPHONE_7_0
-	if (INBIOS7_0_0OrLater) {
+	if (DGIOS7_0_0OrLater) {
 		return [[NSData alloc] initWithBase64EncodedString:base64String
 												   options:NSDataBase64DecodingIgnoreUnknownCharacters];
 	} else {
@@ -49,7 +49,7 @@
 }
 + (NSData * _Nullable)dg_base64DecodedDataWithData:(NSData *)base64Data {
 #ifdef __IPHONE_7_0
-	if (INBIOS7_0_0OrLater) {
+	if (DGIOS7_0_0OrLater) {
 		return [[NSData alloc] initWithBase64EncodedData:base64Data
 												 options:NSDataBase64DecodingIgnoreUnknownCharacters];
 	} else {
@@ -65,7 +65,7 @@
 }
 @end
 
-@implementation NSData (INBMessageDigest)
+@implementation NSData (DGMessageDigest)
 - (NSData * _Nullable)dg_MD2 {
 	unsigned char md[CC_MD2_DIGEST_LENGTH] = {'\0'};
 	CC_MD2(self.bytes, (CC_LONG)self.length, md);
@@ -108,7 +108,7 @@
 }
 @end
 
-@implementation NSData (INBHex)
+@implementation NSData (DGHex)
 static const char *__dg_sc_digitsHex = "0123456789abcdef";
 //static const char *__dg_sc_digitsHex = "0123456789ABCDEF";
 - (NSData * _Nullable)dg_encodeToHexData {
@@ -186,7 +186,7 @@ static int dg_numberFromHex(unsigned char hex) {
 }
 @end
 
-@implementation NSData (INBMDSHAHexString)
+@implementation NSData (DGMDSHAHexString)
 
 - (NSString * _Nullable)dg_MD2HexString {
     return [[self dg_MD2] dg_encodeToHexString];
@@ -222,7 +222,7 @@ static int dg_numberFromHex(unsigned char hex) {
 
 @end
 
-@implementation NSData (INBCryptoPRNG)
+@implementation NSData (DGCryptoPRNG)
 
 + (NSData * _Nullable)dg_generateSecureRandomData:(size_t)length {
     if (length == 0) {
@@ -237,7 +237,7 @@ static int dg_numberFromHex(unsigned char hex) {
     NSData *randomData = nil;
     memset(buf, '\0', length);
 #ifdef __IPHONE_8_0
-    if (INBIOS8_0_0OrLater) {
+    if (DGIOS8_0_0OrLater) {
         if (CCRandomGenerateBytes(buf, length) == kCCSuccess) {
             randomData = [NSData dataWithBytes:buf length:length];
         } else {
@@ -260,7 +260,7 @@ static int dg_numberFromHex(unsigned char hex) {
 
 @end
 
-@implementation NSData (INBHmac)
+@implementation NSData (DGHmac)
 + (NSData * _Nullable)dg_generateHmacKeyForAlgorithm:(CCHmacAlgorithm)algorithm {
 	size_t keySize = 0;
 	switch (algorithm) {
@@ -324,7 +324,7 @@ static int dg_numberFromHex(unsigned char hex) {
 }
 @end
 
-@implementation NSData (INBSymmetricKeyGenerator)
+@implementation NSData (DGSymmetricKeyGenerator)
 + (NSData *)dg_generateSymmetricKeyForAlgorithm:(CCAlgorithm)algorithm {
 	unsigned int keySize = 0;
 	switch (algorithm) {
@@ -349,7 +349,7 @@ static int dg_numberFromHex(unsigned char hex) {
 		case kCCAlgorithmBlowfish:
 			keySize = kCCKeySizeMaxBlowfish;
 			break;
-		default:
+		default:// Assume kCCAlgorithmAES128 / kCCAlgorithmAES
             NSLog(@"%s (The algorithm is invalid. Assume kCCAlgorithmAES128/kCCAlgorithmAES.)", __PRETTY_FUNCTION__);
 			keySize = kCCKeySizeAES256;
 			break;
@@ -432,7 +432,7 @@ static int dg_numberFromHex(unsigned char hex) {
 				keySize = kCCKeySizeMaxBlowfish;
 			}
 			break;
-		default:
+		default:// Assume kCCAlgorithmAES128 / kCCAlgorithmAES
             NSLog(@"%s (The algorithm is invalid. Assume kCCAlgorithmAES128/kCCAlgorithmAES.)", __PRETTY_FUNCTION__);
 			if (keySize <= kCCKeySizeAES128) {
 				keySize = kCCKeySizeAES128;
@@ -447,7 +447,7 @@ static int dg_numberFromHex(unsigned char hex) {
 }
 @end
 
-@implementation NSData (INBIVGenerator)
+@implementation NSData (DGIVGenerator)
 + (NSData * _Nullable)dg_generateIVForAlgorithm:(CCAlgorithm)algorithm {
 	size_t ivSize = 0;
 	switch (algorithm) {
@@ -469,7 +469,7 @@ static int dg_numberFromHex(unsigned char hex) {
 		case kCCAlgorithmBlowfish:
 			ivSize = kCCBlockSizeBlowfish;
 			break;
-		default:
+		default:// Assume kCCAlgorithmAES128 / kCCAlgorithmAES
             NSLog(@"%s (The algorithm is invalid. Assume kCCAlgorithmAES128/kCCAlgorithmAES.)", __PRETTY_FUNCTION__);
 			ivSize = kCCBlockSizeAES128;
 			break;
@@ -478,7 +478,7 @@ static int dg_numberFromHex(unsigned char hex) {
 }
 @end
 
-@implementation NSData (INBSymmetricEncryptionDecryption)
+@implementation NSData (DGSymmetricEncryptionDecryption)
 /**
  *  将数据的长度补足为分组大小的整数倍
  *
@@ -562,7 +562,7 @@ NSUInteger __dg_sc_extraPaddingLength = 0;
 							  key.length <= kCCKeySizeMaxBlowfish);
 			NSParameterAssert(iv == nil || iv.length == kCCBlockSizeBlowfish);
 			break;
-		default:// kCCAlgorithmAES128 / kCCAlgorithmAES
+		default:// Assume kCCAlgorithmAES128 / kCCAlgorithmAES
             NSLog(@"%s (The algorithm is invalid. Assume kCCAlgorithmAES128/kCCAlgorithmAES.)", __PRETTY_FUNCTION__);
 			NSParameterAssert(key.length == kCCKeySizeAES128 ||
 							  key.length == kCCKeySizeAES192 ||
@@ -590,7 +590,7 @@ NSUInteger __dg_sc_extraPaddingLength = 0;
         case kCCAlgorithmBlowfish:
             blockSize = kCCBlockSizeBlowfish;
             break;
-        default:// kCCAlgorithmAES128 / kCCAlgorithmAES
+        default:// Assume kCCAlgorithmAES128 / kCCAlgorithmAES
             NSLog(@"%s (The algorithm is invalid. Assume kCCAlgorithmAES128/kCCAlgorithmAES.)", __PRETTY_FUNCTION__);
             blockSize = kCCBlockSizeAES128;
             break;

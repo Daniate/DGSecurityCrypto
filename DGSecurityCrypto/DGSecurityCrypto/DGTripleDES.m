@@ -1,30 +1,30 @@
 //
-//  INBTripleDES.m
-//  INBSecurityCrypto
+//  DGTripleDES.m
+//  DGSecurityCrypto
 //
 //  Created by Daniate on 15/3/12.
 //  Copyright (c) 2015年 Daniate. All rights reserved.
 //
 
-#import "INBTripleDES.h"
-#import "NSData+INB.h"
+#import "DGTripleDES.h"
+#import "NSData+DGSecurityCrypto.h"
 
-@implementation INBTripleDES
+@implementation DGTripleDES
 
-static INBTripleDES *sharedINBTripleDES = nil;
+static DGTripleDES *sharedDGTripleDES = nil;
 
-+ (nonnull instancetype)sharedINBTripleDES {
++ (nonnull instancetype)sharedDGTripleDES {
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		sharedINBTripleDES = [[super allocWithZone:NULL] init];
-		[sharedINBTripleDES updateKey];
-		[sharedINBTripleDES updateIV];
+		sharedDGTripleDES = [[super allocWithZone:NULL] init];
+		[sharedDGTripleDES updateKey];
+		[sharedDGTripleDES updateIV];
 	});
-	return sharedINBTripleDES;
+	return sharedDGTripleDES;
 }
 
 + (id)allocWithZone:(struct _NSZone *)zone {
-	return [INBTripleDES sharedINBTripleDES];
+	return [DGTripleDES sharedDGTripleDES];
 }
 
 - (void)updateKey {

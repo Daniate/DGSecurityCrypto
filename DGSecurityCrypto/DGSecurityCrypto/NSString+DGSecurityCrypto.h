@@ -1,6 +1,6 @@
 //
-//  NSString+INB.h
-//  INBSecurityCrypto
+//  NSString+DGSecurityCrypto.h
+//  DGSecurityCrypto
 //
 //  Created by Daniate on 15/3/12.
 //  Copyright (c) 2015年 Daniate. All rights reserved.
@@ -10,7 +10,7 @@
 /**
  *  对字符串进行十六进制编解码，使用小写字母。Using lower case.
  */
-@interface NSString (INBHex)
+@interface NSString (DGHex)
 /**
  *  获取NSString对应的十六进制字符串
  *
@@ -25,7 +25,7 @@
 - (NSString * _Nullable)dg_decodeFromHexString;
 @end
 
-@interface NSString (INBMDSHAHexString)
+@interface NSString (DGMDSHAHexString)
 /**
  *  Message Digest 2 hex string
  *

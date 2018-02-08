@@ -1,12 +1,12 @@
-# INBSecurityCrypto
+# DGSecurityCrypto
 
 ## Cryptography contents
 
-* You can build a dynamic framework via the `INBSecurityCrypto` target.
+* You can build a dynamic framework via the `DGSecurityCrypto` target.
 
-* You can test the codes via the `INBSecurityCryptoTests` target.
+* You can test the codes via the `DGSecurityCryptoTests` target.
 
-![image](./images/INBSecurityCrypto_Test.png)
+![image](./images/DGSecurityCrypto_Test.png)
 
 ### Usage
 
@@ -16,15 +16,15 @@ For iOS 6 and later, you can add the source codes to project. (The deployment ta
 
 If an error occurs：`Include of non-modular header inside framework module ***`
 
-![image](./images/INBSecurityCrypto_error.png)
+![image](./images/DGSecurityCrypto_error.png)
 
 You can set `Allow Non-modular Includes In Framework Modules` to `YES` (In `TARGETS -> Build Settings -> Language - Modules`)
 
-![image](./images/INBSecurityCrypto_Allow_Non-modular.png)
+![image](./images/DGSecurityCrypto_Allow_Non-modular.png)
 
 You may should add `-ObjC` to `TARGETS -> Build Settings -> Linking -> Other Linker Flags`.
 
-![image](./images/INBSecurityCrypto_Other_Linker_Flags.png)
+![image](./images/DGSecurityCrypto_Other_Linker_Flags.png)
 
 ### Supported Encryption Algorithms
 

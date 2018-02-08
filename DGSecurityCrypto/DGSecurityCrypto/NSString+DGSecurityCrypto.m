@@ -1,15 +1,15 @@
 //
-//  NSString+INB.m
-//  INBSecurityCrypto
+//  NSString+DGSecurityCrypto.m
+//  DGSecurityCrypto
 //
 //  Created by Daniate on 15/3/12.
 //  Copyright (c) 2015年 Daniate. All rights reserved.
 //
 
-#import "NSString+INB.h"
-#import "NSData+INB.h"
+#import "NSString+DGSecurityCrypto.h"
+#import "NSData+DGSecurityCrypto.h"
 
-@implementation NSString (INBHex)
+@implementation NSString (DGHex)
 
 - (NSString * _Nullable)dg_encodeToHexString {
 	return [[self dataUsingEncoding:NSUTF8StringEncoding] dg_encodeToHexString];
@@ -20,7 +20,7 @@
 }
 @end
 
-@implementation NSString (INBMDSHAHexString)
+@implementation NSString (DGMDSHAHexString)
 
 - (NSString * _Nullable)dg_MD2HexString {
     return [[self dataUsingEncoding:NSUTF8StringEncoding] dg_MD2HexString];

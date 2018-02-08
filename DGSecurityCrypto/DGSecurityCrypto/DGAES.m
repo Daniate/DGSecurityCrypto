@@ -1,30 +1,30 @@
 //
-//  INBAES.m
-//  INBSecurityCrypto
+//  DGAES.m
+//  DGSecurityCrypto
 //
 //  Created by Daniate on 15/3/12.
 //  Copyright (c) 2015年 Daniate. All rights reserved.
 //
 
-#import "INBAES.h"
-#import "NSData+INB.h"
+#import "DGAES.h"
+#import "NSData+DGSecurityCrypto.h"
 
-@implementation INBAES
+@implementation DGAES
 
-static INBAES *sharedINBAES = nil;
+static DGAES *sharedDGAES = nil;
 
-+ (nonnull instancetype)sharedINBAES {
++ (nonnull instancetype)sharedDGAES {
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		sharedINBAES = [[super allocWithZone:NULL] init];
-		[sharedINBAES updateKeyWithKeySize:kCCKeySizeAES256];
-		[sharedINBAES updateIV];
+		sharedDGAES = [[super allocWithZone:NULL] init];
+		[sharedDGAES updateKeyWithKeySize:kCCKeySizeAES256];
+		[sharedDGAES updateIV];
 	});
-	return sharedINBAES;
+	return sharedDGAES;
 }
 
 + (id)allocWithZone:(struct _NSZone *)zone {
-	return [INBAES sharedINBAES];
+	return [DGAES sharedDGAES];
 }
 
 - (void)updateKeyWithKeySize:(unsigned int)keySize {

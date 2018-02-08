@@ -1,13 +1,13 @@
 //
-//  INBSecurityCryptoTests.m
-//  INBSecurityCryptoTests
+//  DGSecurityCryptoTests.m
+//  DGSecurityCryptoTests
 //
 //  Created by Daniate on 2017/7/22.
 //  Copyright © 2017年 Daniate. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
-#import <INBSecurityCrypto/INBSecurityCrypto.h>
+#import <DGSecurityCrypto/DGSecurityCrypto.h>
 
 #define kText @"近日召开的国务院常务会议鼓励电信企业提升城市宽带接入速率，降低资费水平，推出流量不清零等服务，随后，三大运营商很快公布各自提速降费方案。但网络上汹涌的“差评”吐槽方案中的一些举措诚意缺失。运营商们用“不给力”的表现，再次证明要切实深化电信行业改革，不仅要靠政府监管发力推动，还须把内在驱动的“鞭子”交给市场。梳理三大运营商的提速降费方案不难发现，尽管上有敦促下有呼声，但社会期待的全业务大规模降费并没有实现。运营商只是以“限时流量”“促销套餐”等手段来拉低单价，一些“鸡肋式”套餐甚至会让有的消费者通讯费用不降反升。这种“假摔式降费”，既反映出部分电信企业“糊弄”的态度，又暴露出当前电信市场竞争度远未达到激烈的程度。缺乏有效的市场竞争，一直是电信行业改革滞后的重要原因。在消费者眼里，不仅有些“套餐”成为吸费的“圈套”，就连宽带入户这“最后一公里”，也堵在了运营商对居民小区势力范围划分形成的“垄断”上。在行业内，几家大运营商因其传统市场优势地位难以被撼动，形成较为稳定的市场份额和收益，对消费者需求和呼声长期缺乏足够关切，也缺乏进行根本变革的内在动力。这直接导致电信市场竞争格局长期固化，运营商资费居高不下，服务和基础设施有待完善，网间技术融合仍未较好实现的尴尬局面。站在更高层面审视，提速降费不仅关系到消费者利益，更关系到“互联网＋”在经济转型升级的关键时刻能否更好地产生“乘法效应”。我国已经是世界第二大经济体，世界第一大手机拥有国，网速却排在世界80名之后，人们每到一处往往满怀渴望地询问“有没有wifi”……“惜流如金”和网速瓶颈不仅显示了消费者的窘境，也在基础服务上制约着“互联网＋”的发展。因此，提速降费深层次目的是更好地提升基础设施服务，降低社会经济运行成本，满足消费者的需求，激发社会创新创业活力。此外，提速降费也是电信企业应对未来市场竞争压力，提升企业竞争力的理性选择。去年中国手机网民已达6．5亿户，数据流量消费更增长迅猛。从长远看，电信企业放低姿态，薄利多销，是其主动适应市场需求、提高经营效益的必然选择。越早意识到、想明白这点，企业在竞争力提升上就会越主动。看来，用政府之手强化改革方向，对相关行业、企业抓监管抓考核之外，在根本上还要让市场之手挥起“鞭子”，倒逼改革措施触及深层次利益落地生根。近日召开的国务院常务会议提出将推进电信市场开放和公平竞争，年内宽带接入业务开放试点企业将增加到100家以上，这无疑将更好地让市场在资源配置中发挥决定性作用，让市场主体顺应改革大潮和竞争压力拿出更多“诚意”，更好地满足消费者需求、为经济转型发展助力。"
 
@@ -34,11 +34,11 @@ IgqwaDQYsl5tB7BUmVqVIHoCzndhvpTF84UJyMlOCDeaZFY85Jjfokjnz9AFDaiF\
 AnWUvec39pTE48Lpw6Hv0AEoKIj9LUM9WFqX33qv6ZNcOhYnFIlXcmD2EH2fuojn\
 AykJuj5Zp2mz4r8uf6yBhORuG3mIXZzUIeH1WlTDOYoxNXJxbUHjWg=="
 
-@interface INBSecurityCryptoTests : XCTestCase
+@interface DGSecurityCryptoTests : XCTestCase
 @property (nonatomic, copy) NSData *plainData;
 @end
 
-@implementation INBSecurityCryptoTests
+@implementation DGSecurityCryptoTests
 
 - (void)setUp {
     [super setUp];
@@ -140,7 +140,7 @@ AykJuj5Zp2mz4r8uf6yBhORuG3mIXZzUIeH1WlTDOYoxNXJxbUHjWg=="
 }
 
 - (void)test3DES {
-    INBTripleDES *tripleDES = [INBTripleDES sharedINBTripleDES];
+    DGTripleDES *tripleDES = [DGTripleDES sharedDGTripleDES];
     NSData *cipherData = [tripleDES tripleDESEncrypt:self.plainData];
     NSData *plainData_ = [tripleDES tripleDESDecrypt:cipherData];
     NSString *text = [[NSString alloc] initWithData:plainData_ encoding:NSUTF8StringEncoding];
@@ -158,7 +158,7 @@ AykJuj5Zp2mz4r8uf6yBhORuG3mIXZzUIeH1WlTDOYoxNXJxbUHjWg=="
  *  AES
  */
 - (void)testAES {
-    INBAES *aes = [INBAES sharedINBAES];
+    DGAES *aes = [DGAES sharedDGAES];
     [aes updateKeyWithKeySize:kCCKeySizeAES256];
     [aes updateIV];
     NSLog(@"AES key - %@", [aes.key dg_encodeToHexString]);
@@ -181,7 +181,7 @@ AykJuj5Zp2mz4r8uf6yBhORuG3mIXZzUIeH1WlTDOYoxNXJxbUHjWg=="
  *  RSA
  */
 - (void)testRSA {
-    INBRSA *rsa = [INBRSA sharedINBRSA];
+    DGRSA *rsa = [DGRSA sharedDGRSA];
     NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"DaniateCert" ofType:@"p12"];
     XCTAssert(path, @"未能找到p12文件");
     // p12文件的密码为111111
@@ -200,7 +200,7 @@ AykJuj5Zp2mz4r8uf6yBhORuG3mIXZzUIeH1WlTDOYoxNXJxbUHjWg=="
 }
 
 - (void)testLoadPublicKeyFromCert {
-    INBRSA *rsa = [INBRSA sharedINBRSA];
+    DGRSA *rsa = [DGRSA sharedDGRSA];
     SecKeyRef publicKeyOld = rsa.publicKey;
     NSLog(@"before - %@", publicKeyOld);
     NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"DaniateCert" ofType:@"cer"];
@@ -212,7 +212,7 @@ AykJuj5Zp2mz4r8uf6yBhORuG3mIXZzUIeH1WlTDOYoxNXJxbUHjWg=="
 
 - (void)testLoadPublicKeyFromBase64CertData {
     NSData *certData = [NSData dg_base64DecodedDataWithString:kBase64PublicKey];
-    INBRSA *rsa = [INBRSA sharedINBRSA];
+    DGRSA *rsa = [DGRSA sharedDGRSA];
     SecKeyRef publicKeyOld = rsa.publicKey;
     NSLog(@"before - %@", publicKeyOld);
     if ([rsa publicKeyFromDERData:certData]) {
@@ -225,7 +225,7 @@ AykJuj5Zp2mz4r8uf6yBhORuG3mIXZzUIeH1WlTDOYoxNXJxbUHjWg=="
  *  数字签名
  */
 - (void)testDigitalSignature {
-    INBRSA *rsa = [INBRSA sharedINBRSA];
+    DGRSA *rsa = [DGRSA sharedDGRSA];
     // 自iOS 5.0起，不再支持kSecPaddingPKCS1MD2、kSecPaddingPKCS1MD5
     NSArray *paddings = @[
                           //						  @(kSecPaddingPKCS1MD2),/* Unsupported as of iOS 5.0 */

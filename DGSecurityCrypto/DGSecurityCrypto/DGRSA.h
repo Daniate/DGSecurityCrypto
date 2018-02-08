@@ -1,6 +1,6 @@
 //
-//  INBRSA.h
-//  INBSecurityCrypto
+//  DGRSA.h
+//  DGSecurityCrypto
 //
 //  Created by Daniate on 15/3/12.
 //  Copyright (c) 2015年 Daniate. All rights reserved.
@@ -13,20 +13,20 @@
 /**
  *  密钥长度，以比特为单位
  */
-FOUNDATION_EXPORT NSUInteger const INBRSAKeySizeInBits2048;
-FOUNDATION_EXPORT NSUInteger const INBRSAKeySizeInBits1024;
+FOUNDATION_EXPORT NSUInteger const DGRSAKeySizeInBits2048;
+FOUNDATION_EXPORT NSUInteger const DGRSAKeySizeInBits1024;
 
 /**
  *  RSA，加解密时使用kSecPaddingPKCS1，默认生成的密钥的长度为2048位
  */
-@interface INBRSA : NSObject
+@interface DGRSA : NSObject
 @property (nonatomic, readonly, nullable) SecKeyRef privateKey;
 @property (nonatomic, readonly, nullable) SecKeyRef publicKey;
 /**
  *  创建及验证数字签名时，所使用的填充模式，必须是kSecPaddingPKCS1SHA*，默认为kSecPaddingPKCS1SHA1
  */
 @property (nonatomic) SecPadding padding;
-+ (nonnull instancetype)sharedINBRSA;
++ (nonnull instancetype)sharedDGRSA;
 /**
  *  生成公私钥对。密钥长度为2048位。
  *
@@ -34,9 +34,9 @@ FOUNDATION_EXPORT NSUInteger const INBRSAKeySizeInBits1024;
  */
 - (BOOL)generateKeys;
 /**
- 根据指定的密钥长度，生成公私钥对。当前只支持INBRSAKeySizeInBits中声明的长度。
+ 根据指定的密钥长度，生成公私钥对。当前只支持DGRSAKeySizeInBits中声明的长度。
 
- @param keySizeInBits INBRSAKeySizeInBits2048 / INBRSAKeySizeInBits1024
+ @param keySizeInBits DGRSAKeySizeInBits2048 / DGRSAKeySizeInBits1024
  @return 是否成功生成公私钥对，成功：YES，失败：NO
  */
 - (BOOL)generateKeys:(NSUInteger)keySizeInBits;

@@ -1,6 +1,6 @@
 //
-//  INBAES.h
-//  INBSecurityCrypto
+//  DGAES.h
+//  DGSecurityCrypto
 //
 //  Created by Daniate on 15/3/12.
 //  Copyright (c) 2015年 Daniate. All rights reserved.
@@ -11,10 +11,10 @@
 /**
  *  AES加解密。使用CBC及PKCS7Padding。
  */
-@interface INBAES : NSObject
+@interface DGAES : NSObject
 @property (nonatomic, copy, readonly, nullable) NSData *key;
 @property (nonatomic, copy, readonly, nullable) NSData *iv;
-+ (nonnull instancetype)sharedINBAES;
++ (nonnull instancetype)sharedDGAES;
 /**
  *  更新密钥。
  *
